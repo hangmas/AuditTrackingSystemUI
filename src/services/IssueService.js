@@ -5,6 +5,10 @@ class IssueService {
     getIssues(){
         return http.get(`/issue`);
     }
+
+    createIssue(){
+        
+    }
 }
 
 export default new IssueService();
