@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Login from "../components/MainLogin.vue";
 import employeeProfile from "../components/EmployeeProfile.vue";
+import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
 
 const routes =[
@@ -21,8 +22,13 @@ component : employeeProfile
 path : "/dashboard",
 name : "dashboardAuditor",
 component : dashboardAuditor
-}
+},
 
+{
+    path: "/issues",
+    name: "IssuesPage",
+    component: IssuesPage
+},
 ];//this is an array containing the path which is the url
 
 
