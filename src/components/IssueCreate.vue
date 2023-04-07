@@ -5,26 +5,30 @@
             <div class="issuedetails">
                 <label class="label" for="auditreporttitle">Audit Report Title: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="auditreporttitletext" id="auditreporttitletextid" placeholder="" v-model="auditreporttitle">
+                <input class="inputtext" type="inputtext" name="auditreporttitletext" id="auditreporttitletextid" placeholder="" v-model="issueData.reportTitle">
                 <br>        
                 <label class="label" for="issuetitle">Audit Issue Title: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="auditissuetitletext" id="auditissuetitletextid" placeholder="" v-model="issuetitle">        
+                <input class="inputtext" type="inputtext" name="auditissuetitletext" id="auditissuetitletextid" placeholder="" v-model="issueData.issueTitle">        
                 <br>     
+                <label class="label" for= "issueDate">Issue Date: </label>
+                <br>
+                <input class="inputtext" type="date" name="issuedate" id="issuedateid" placeholder="" v-model="issueDateNC" @change="updateTimestamp1">
+                <br>           
                 <label class="label" for= "approveddeadline">Approved Deadline: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="approveddeadlineetext" id="approveddeadlineid" placeholder="" v-model="approveddeadline">
+                <input class="inputtext" type="date" name="approveddeadlineetext" id="approveddeadlineid" placeholder="" v-model="approvedDateNC" @change="updateTimestamp2">
                 <br>       
                 <label class="label" for= "risklevel">Risk Level: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="risklevel">
+                <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="issueData.riskRating">
                 <br>       
             </div> 
             
             <div class="responsibledept">
                 <label class="label" for="departmentresponsible">Department Responsible: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="" v-model="departmentresponsible">
+                <input class="inputtext" type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="" v-model="issueData.departmentResponsible">
                 <br>        
                 <label class="label" for="personresponsible">Person Responsible: </label>
                 <br>
@@ -32,13 +36,13 @@
                 <br>        
                 <label class="label" for="emailresponsible">E-mail Address: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="emailtext" id="emailid" placeholder="" v-model="emailresponsible">
+                <input class="inputtext" type="inputtext" name="emailtext" id="emailid" placeholder="" v-model="issueData.empEmail">
                 <br>
             </div>
             
         </div>
         <br>
-        <button id="createnewissue">Create New Issue</button>
+        <button id="createnewissue" @click="createNewIssue">Create New Issue</button>
         <button id="cancelcreate">Cancel</button>
         <IssueList />
 
@@ -46,29 +50,51 @@
 
 </template>
 <script>
+import IssueService from "@/services/IssueService";
 import IssueList from "./IssueList.vue"
 export default{
     name: "IssueCreate",
     data(){
         return{
-        auditreporttitle:"",
-        issuetitle: "",
-        approveddeadline: 0,
-        risklevel: "",
-        departmentresponsible:"",
+        issueData:{
+        reportTitle:"",
+        issueTitle: "",
+        issueDate:0,
+        riskRating: "",
+        departmentResponsible:"",
+        approvedDeadline:0,
+        empEmail:""
+        },
         personresponsible:"",
-        emailresponsible:""
-    
+        issueDateNC:"",
+        approvedDateNC:""
+              
         }
         
-
-
     },
     methods: {
 
         createNewIssue(){
-            
-        }
+            IssueService.createIssue(this.issueData)
+                .then(response =>{
+                    console.log(response.data);
+                    this.issueData={};
+                })
+                .catch(error =>{
+                    console.log(error.response.data);
+                })
+        
+        },
+
+        updateTimestamp1() {
+            const timestamp = new Date(this.issueDateNC).getTime() / 1000;
+            this.issueData.issueDate = timestamp;
+            },
+
+        updateTimestamp2() {
+            const timestamp = new Date(this.issueDateNC).getTime() / 1000;
+            this.issueData.approvedDeadline = timestamp;
+            }
 
     },
 

@@ -1,5 +1,5 @@
 <template>
-    <div id="menu buttons">
+    <div id="menubuttons">
         <button id="CreateButton">Create</button>
         <button id="EditButton">Edit</button>
         <button id="DeleteButton">Delete</button>
@@ -23,6 +23,16 @@ export default {
 </script>
 
 <style scoped>
+button {
+    margin-left: 8px;
+}
+
+#menubuttons{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: flex-end;
     
+}
 
 </style>

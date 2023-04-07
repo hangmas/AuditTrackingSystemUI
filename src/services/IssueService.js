@@ -6,8 +6,8 @@ class IssueService {
         return http.get(`/issue`);
     }
 
-    createIssue(){
-        
+    createIssue(data){
+        return http.post("/issue",data);
     }
 }
 
