@@ -1,5 +1,6 @@
 <template>
 <div>
+  <h1>Auditor Dashboard</h1>
     <h2>Outstanding Issues</h2>
     <label for="department-filter">Filter by department: </label>
     <select id="department-filter" v-model="selectedDepartment">
@@ -14,26 +15,35 @@
       <th>Risk Rating</th>
       <th>Departement Responsible</th>
       <th>Approved Deadline</th>
-      <th>Status</th>
     </tr>
     <tr v-for="(item, index) in filteredIssues" :key="index">
-
           <td>{{ item.reportTitle }}</td>
           <td>{{ item.issueTitle }}</td>
           <td>{{ item.issueDate }}</td>
           <td>{{ item.riskRating }}</td>
           <td>{{ item.departmentResponsible }}</td>
           <td>{{ item.approvedDeadline }}</td>
-          <td>{{ item.status }}</td>
         </tr>
 </table>
 </div>
 <br><br>
 <div>
     <h2>Closed Issues</h2>
-    <table border="1">
-    <tr><th>Report Title</th><th>Issue Title</th><th>Issue Date</th><th>Risk Rating</th><th>Departement Responsible</th><th>Approved Deadline</th></tr>
-    <tr v-for="(item, index) in issuesList" :key="index">
+    <label for="department-filter2">Filter by department: </label>
+    <select id="department-filter2" v-model="selectedDepartment2">
+      <option value="">All departments</option>
+      <option v-for="(department, index) in departments" :key="index" :value="department">{{ department }}</option>
+    </select>
+    <table class="issuelisttable">
+    <tr>
+      <th>Report Title</th>
+      <th>Issue Title</th>
+      <th>Issue Date</th>
+      <th>Risk Rating</th>
+      <th>Departement Responsible</th>
+      <th>Approved Deadline</th>
+    </tr>
+    <tr v-for="(item, index) in filteredIssues2" :key="index">
           <td>{{ item.reportTitle }}</td>
           <td>{{ item.issueTitle }}</td>
           <td>{{ item.issueDate }}</td>
@@ -44,19 +54,17 @@
 </table>
 </div>
 
-<div>
-    <p>Timestamp: {{ timestamp }}</p>
-    <p>Date: {{ date }}</p>
-  </div>
 
+<!--
 <div>
   <p v-for="(item, index) in filteredEmp" :key="index" :value="firstName">{{ item.firstName }}</p>
-</div>
+</div>-->
+<!--
 <div>
   <ul>
     <li v-for="(employee, index) in employee" :key="index">{{ employee.firstName }}</li>
     </ul>
-  </div>
+  </div>-->
 </template>
 <script>
 import EmployeeDataService from '../services/EmployeeDataService'
@@ -69,28 +77,12 @@ data()
 {
     return{
       
-        issues: [
-        {
-          reportTitle: "Audit of Compliance Department",
-          issueTitle: "Lack of Standard Operating Procedure Documentation",
-          issueDate : "2022/10/29",
-          riskRating: "Low",
-          department : "Information Technology"
-        },
-        {
-          reportTitle: "Audit of Finance Department",
-          issueTitle: "Inaccurate Financial Reporting",
-          issueDate : "2022/10/30",
-          riskRating : "High",
-          department : "Compliance"
-        },
-      ],
+       
       selectedDepartment: "",
+      selectedDepartment2: "",
       employee : [],
       issuesList:[],
-      issuesOutstanding :[],
       firstName : "",
-      timestamp: 1627266200000, // sample timestamp value
       date: '', // variable to hold the date value
     }
 
@@ -118,12 +110,12 @@ data()
                 console.log(this.issuesList);
                 
                 this.issuesList.forEach(issue => {
-                const date = new Date(issue.issueDate);
+                const date = new Date(issue.issueDate * 1000);
                 issue.issueDate = date.toLocaleDateString(); // update issueDate to the formatted date string
           });
 
           this.issuesList.forEach(issue => {
-                const date = new Date(issue.approvedDeadline);
+                const date = new Date(issue.approvedDeadline * 1000);
                 issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
           });
 
@@ -167,9 +159,9 @@ data()
 },
 
 filteredIssues2() {
-  if (this.selectedDepartment) {
+  if (this.selectedDepartment2) {
     return this.issuesList.filter((issue) => {
-      return issue.departmentResponsible === this.selectedDepartment && issue.status === 'Closed';
+      return issue.departmentResponsible === this.selectedDepartment2 && issue.status === 'Closed';
     });
   } else {
     return this.issuesList.filter((issue) => {
@@ -190,7 +182,6 @@ filteredIssues2() {
   {
     this.retrieveEmployee();
     this.retrieveIssue();
-    this.date = new Date(this.timestamp).toLocaleString(); // convert timestamp to date
 
 
   }

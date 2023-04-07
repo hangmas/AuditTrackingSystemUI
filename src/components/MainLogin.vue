@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import LoginService from '@/services/LoginService';
+//import LoginService from '@/services/LoginService';
+import EmployeeDataService from '../services/EmployeeDataService'
 
 
 
@@ -37,22 +38,21 @@ export default {
     methods:{
         login(event){
             event.preventDefault();
-            LoginService.login(this.employeeLoginRequest) // all the data from login will be send to LoginService.js, it has an api in that file
+            EmployeeDataService.get()
+          //  LoginService.login(this.employeeLoginRequest) // all the data from login will be send to LoginService.js, it has an api in that file
             .then(response => {
                 let employee = response.data;
                 console.log(employee);
+                this.employeeID = 222;
+                localStorage.setItem('eid',this.employeeID);
                // this.message = "test";
- //               this.$router.push({name:"login"});
+                this.$router.push({name:"dashboardAuditee"});
 
             }
             )
 
             .catch(error =>{
-                this.employeeLoginRequest.employeeID = "";
-                this.employeeLoginRequest.password = "";
-                this.message = error.response.data.message;
-                console.log(error.response.data);
-                this.message = "test";
+                console.log(error);
             });
 
         }

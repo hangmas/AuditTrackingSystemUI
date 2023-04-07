@@ -3,7 +3,7 @@ import Login from "../components/MainLogin.vue";
 import employeeProfile from "../components/EmployeeProfile.vue";
 import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
-
+import dashboardAuditee from "../components/DashboardAuditee.vue"
 const routes =[
 {
 
@@ -19,10 +19,16 @@ component : employeeProfile
 
 },
 {
-path : "/dashboard",
+path : "/dashboardAuditor",
 name : "dashboardAuditor",
 component : dashboardAuditor
 },
+
+{
+    path : "/dashboardAuditee",
+    name : "dashboardAuditee",
+    component : dashboardAuditee
+    },
 
 {
     path: "/issues",
