@@ -27,11 +27,11 @@
             <td><input type="checkbox" name="issueCheckbox + index" :checked="checkedIndex === index" @change="updateCheckbox(index)"></td>
             <td>{{ item.reportTitle }}</td>
             <td>{{ item.issueTitle }}</td>
-            <td>{{ item.issueDate }}</td>
+            <td>{{ new Date(item.issueDate * 1000).toLocaleDateString() }}</td>
             <td>{{ item.riskRating  }}</td>
             <td>{{ item.auditee.employee.firstName }} {{ item.auditee.employee.lastName }}</td>
             <td>{{ item.departmentResponsible }}</td>
-            <td>{{ item.approvedDeadline }}</td>
+            <td>{{ new Date(item.approvedDeadline * 1000).toLocaleDateString() }}</td>
             
         </tr>
     </table>
@@ -52,7 +52,8 @@ export default{
         employeeList:[],
         employeeName:"",
         checkedIndex:null,
-        selectedIssue:{}
+        selectedIssue:{},
+       
         }
 },
 
@@ -62,7 +63,7 @@ methods: {
         IssueService.getIssues()
             .then(response =>{
                 this.issuesList = response.data;
-                console.log(this.issuesList);
+                console.log(this.issuesList);  
 
             })
             .catch(error => {
@@ -88,7 +89,6 @@ methods: {
         this.selectedIssue = this.issuesList[index];
     }
   
-
 },
 
 mounted(){
