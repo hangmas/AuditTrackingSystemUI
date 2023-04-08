@@ -67,7 +67,7 @@
     {
         return{
           
-           
+          eDepartment :"",
           selectedDepartment: "",
           selectedDepartment2: "",
           employee : [],
@@ -82,7 +82,6 @@
       methods :{
         retrieveEmployee(){
             const eid = localStorage.getItem('eid');
-            console.log("EID " + eid);
                EmployeeDataService.get()
                 .then(response =>{
                     this.employee = response.data; //employee will save all the data 
@@ -91,7 +90,11 @@
          //           console.log(this.firstNames);
          this.employee.forEach(item => {
                     if(item.id === parseInt(eid))
-                    {console.log("departement " + item.department);}
+                    {
+                      console.log("departement " + item.department);
+                      this.eDepartment = item.department;
+                    
+                    }
               });
 
 
@@ -146,19 +149,12 @@
         // },
     
         filteredIssues() { //Filter the issue list based on the departement and the status of the issue
-            return this.issuesList.filter((issue) => issue.departmentResponsible === "Human Resource" && issue.status === 'Outstanding')
+            return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Outstanding')
     },
     
     filteredIssues2() {
-      if (this.selectedDepartment2) {
-        return this.issuesList.filter((issue) => {
-          return issue.departmentResponsible === this.selectedDepartment2 && issue.status === 'Closed';
-        });
-      } else {
-        return this.issuesList.filter((issue) => {
-          return issue.status === 'Closed';
-        });
-      }
+      return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Closed')
+
     },
     
         filteredEmp()
