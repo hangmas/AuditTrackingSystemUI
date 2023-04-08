@@ -1,12 +1,12 @@
 <template>
     <div id="menubuttons">
-        <button id="CreateButton">Create</button>
-        <button id="EditButton">Edit</button>
+        <button id="CreateButton" @click=handleCreateIssue>Create</button>
+        <button id="EditButton" @click="handleEditIssue">Edit</button>
         <button id="DeleteButton">Delete</button>
         <button id="View Details">View Details</button>
     </div>
     <div>
-        <IssueList />
+        <IssueList :getSelectedIssue="getSelectedIssue"/>
     </div>
 </template>
 
@@ -17,6 +17,37 @@ export default {
     name: "IssuesPage",
     components: {
         IssueList,
+    },
+    data(){
+        return{
+            selectedIssueChecked:{}
+        }
+    },
+
+    methods:{
+        handleCreateIssue(event){
+            event.preventDefault();
+            this.$router.push({name:"IssueCreate"});
+
+        },
+
+        handleEditIssue(event){
+            event.preventDefault();
+            const isEmpty = Object.keys(this.selectedIssueChecked).length === 0;
+            if(isEmpty){
+                window.alert("Please check one of the issues you want to edit");
+            }else{
+                this.$router.push({name:"IssueEdit"});
+            }
+        },
+
+        //method to get the selected item from the child component and store it in a local variable of the parent.
+        //this is then stored in local storage so that this can be passed down to another component
+        getSelectedIssue(selectedIssue){
+            this.selectedIssueChecked = selectedIssue;
+            localStorage.setItem("selectedIssuePassed",JSON.stringify(this.selectedIssueChecked));
+           
+        }
     }
 }
 

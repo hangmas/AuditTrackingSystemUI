@@ -4,7 +4,8 @@ import employeeProfile from "../components/EmployeeProfile.vue";
 import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
 import IssueCreate from "../components/IssueCreate.vue"
-import dashboardAuditee from "../components/DashboardAuditee.vue"
+import IssueEdit from "../components/IssueEdit.vue"
+
 const routes =[
 {
 
@@ -20,16 +21,10 @@ component : employeeProfile
 
 },
 {
-path : "/dashboardAuditor",
+path : "/dashboard",
 name : "dashboardAuditor",
 component : dashboardAuditor
 },
-
-{
-    path : "/dashboardAuditee",
-    name : "dashboardAuditee",
-    component : dashboardAuditee
-    },
 
 {
     path: "/issues",
@@ -41,6 +36,12 @@ component : dashboardAuditor
     path: "/createissues",
     name: "IssueCreate",
     component: IssueCreate
+},
+
+{
+    path: "/editIssues",
+    name: "IssueEdit",
+    component: IssueEdit
 },
 
 
