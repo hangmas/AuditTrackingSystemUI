@@ -24,7 +24,10 @@
         
         </tr>
         <tr v-for="(item, index) in issuesList" :key="index">
-            <td><input type="checkbox" name="issueCheckbox + index" :checked="checkedIndex === index" @change="updateCheckbox(index)"></td>
+           
+            <!-- The :checked attribute is used to bind the checkbox's checked state to the checkedIndex === index expression. 
+            The checkedIndex variable is a computed property,  and it's compared with index to determine if the checkbox should be checked or not. -->
+            <td><input type="checkbox" name="issueCheckbox + index" :checked="checkedIndex === index" @change="updateCheckbox(index),getSelectedIssue(selectedIssue)"></td>
             <td>{{ item.reportTitle }}</td>
             <td>{{ item.issueTitle }}</td>
             <td>{{ new Date(item.issueDate * 1000).toLocaleDateString() }}</td>
@@ -45,6 +48,9 @@ import IssueService from '@/services/IssueService';
 
 export default{
     name: "IssueList",
+    props:{
+        getSelectedIssue: Function
+    },
     data(){
         return {         
        
@@ -52,10 +58,11 @@ export default{
         employeeList:[],
         employeeName:"",
         checkedIndex:null,
-        selectedIssue:{},
-       
-        }
+        selectedIssue:{},    
+           
+    }
 },
+
 
 methods: {
     //retrieve all issues from the database
@@ -87,6 +94,8 @@ methods: {
     updateCheckbox(index) {
         this.checkedIndex = index;
         this.selectedIssue = this.issuesList[index];
+        //console.log(this.selectedIssue);
+        
     }
   
 },
@@ -94,6 +103,7 @@ methods: {
 mounted(){
 this.retrieveIssue();
 this.retrieveEmployee();
+
 
 
 }

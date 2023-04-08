@@ -43,7 +43,7 @@
         </div>
         <br>
         <button id="createnewissue" @click="createNewIssue">Create New Issue</button>
-        <button id="cancelcreate">Cancel</button>
+        <button id="cancelcreate" @click="cancelButton">Cancel</button>
         <IssueList />
 
     </div>
@@ -94,7 +94,13 @@ export default{
         updateTimestamp2() {
             const timestamp = new Date(this.issueDateNC).getTime() / 1000;
             this.issueData.approvedDeadline = timestamp;
-            }
+            },
+
+
+        cancelButton(event){
+            event.preventDefault();
+            this.$router.push({name:"IssuesPage"});
+        }
 
     },
 
