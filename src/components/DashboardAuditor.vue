@@ -4,9 +4,9 @@
     <h2>Outstanding Issues</h2>
     <div>
       <p><b><u>Total Outstanding Issue : {{ tRisk }}</u></b></p>
-    <p>Low Risk : <span style="color: green"><b>{{ lRisk }} ({{    (this.lRisk/this.tRisk) * 100 }}%)</b></span>
-    <br>Medium Risk : <span style="color: orange"><b>{{ mRisk }} ({{    (this.mRisk/this.tRisk) * 100 }}%)</b></span>
-    <br>High Risk : <span style="color: red"><b>{{ hRisk }} ({{    (this.hRisk/this.tRisk) * 100 }}%)</b></span>
+    <p>Low Risk : <span style="color: green"><b>{{ lRisk }} ({{   (lRisk/tRisk * 100).toFixed(2)}}%)</b></span>
+    <br>Medium Risk : <span style="color: orange"><b>{{ mRisk }} ({{    (mRisk/tRisk * 100).toFixed(2) }}%)</b></span>
+    <br>High Risk : <span style="color: red"><b>{{ hRisk }} ({{   (hRisk/tRisk * 100).toFixed(2)}}%)</b></span>
   </p>
    </div>
     <label for="department-filter">Filter by department: </label>
@@ -37,10 +37,10 @@
 <div>
     <h2>Closed Issues</h2>
     <div>
-      <p><b>Total Outstanding Issue : {{ tRisk }}</b></p>
-    <p>Low Risk : <span style="color: green"><b>{{ lRisk }} ({{    (this.lRisk/this.tRisk) * 100 }}%)</b></span>
-    <br>Medium Risk : <span style="color: orange"><b>{{ mRisk }} ({{    (this.mRisk/this.tRisk) * 100 }}%)</b></span>
-    <br>High Risk : <span style="color: red"><b>{{ hRisk }} ({{    (this.hRisk/this.tRisk) * 100 }}%)</b></span>
+      <p><b>Total Outstanding Issue : {{ tRisk2 }}</b></p>
+    <p>Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{    (this.lRisk2/this.tRisk2) * 100 }}%)</b></span>
+    <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{    (this.mRisk2/this.tRisk2) * 100 }}%)</b></span>
+    <br>High Risk : <span style="color: red"><b>{{ hRisk2 }} ({{    (this.hRisk2/this.tRisk2) * 100 }}%)</b></span>
   </p>
    </div>
     <label for="department-filter2">Filter by department: </label>
@@ -98,10 +98,6 @@ data()
       selectedDepartment2: "",
       employee : [],
       issuesList:[],
-      lRisk : 0.0,
-      mRisk : 0.0,
-      hRisk : 0.0,
-      tRisk : 0.0,
       date: '', // variable to hold the date value
 
     
@@ -138,12 +134,20 @@ data()
                 issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
           });
 
-          this.issuesList.forEach(issue => {
-            if(issue.riskRating === 'Low' && issue.status ==='Outstanding') this.lRisk ++;
-            if(issue.riskRating === 'Medium' && issue.status ==='Outstanding') this.mRisk ++;
-            if(issue.riskRating === 'High' && issue.status ==='Outstanding') this.hRisk ++;
-            if(issue.status === 'Outstanding') this.tRisk++;
-          });
+          // this.issuesList.forEach(issue => {
+          //   if(issue.riskRating === 'Low' && issue.status ==='Outstanding') this.lRisk ++;
+          //   if(issue.riskRating === 'Medium' && issue.status ==='Outstanding') this.mRisk ++;
+          //   if(issue.riskRating === 'High' && issue.status ==='Outstanding') this.hRisk ++;
+          //   if(issue.status === 'Outstanding') this.tRisk++;
+          // });
+
+          
+          // this.issuesList.forEach(issue => {
+          //   if(issue.riskRating === 'Low' && issue.status ==='Closed') this.lRisk2 ++;
+          //   if(issue.riskRating === 'Medium' && issue.status ==='Closed') this.mRisk2 ++;
+          //   if(issue.riskRating === 'High' && issue.status ==='Closed') this.hRisk2 ++;
+          //   if(issue.status === 'Closed') this.tRisk2++;
+          // });
         
             })
             .catch(error => {
@@ -164,13 +168,7 @@ data()
       }
       return Array.from(departments);
     },
-    // filteredIssues() {
-    //   if (this.selectedDepartment) {
-    //     return this.issuesList.filter((issue) => issue.departmentResponsible === this.selectedDepartment);
-    //   } else {
-    //     return this.issuesList;
-    //   }
-    // },
+
 
     filteredIssues() { //Filter the issue list based on the departement and the status of the issue
   if (this.selectedDepartment) {
@@ -200,9 +198,37 @@ filteredIssues2() {
     {
 
       return this.employee.filter((employee) => employee.firstName === "Shilpa")
-    }
-    
+    },
+  
+  tRisk() {
+    return this.filteredIssues.filter(issue => issue.riskRating === 'Low' || issue.riskRating === 'High' || issue.riskRating === 'Medium').length;
   },
+  lRisk() {
+    return this.filteredIssues.filter(issue => issue.riskRating === 'Low').length;
+  },
+  mRisk() {
+    return this.filteredIssues.filter(issue => issue.riskRating === 'Medium').length;
+  },
+  hRisk() {
+    return this.filteredIssues.filter(issue => issue.riskRating === 'High').length;
+  },
+
+  tRisk2() {
+    return this.filteredIssues2.filter(issue => issue.riskRating === 'Low' || issue.riskRating === 'High' || issue.riskRating === 'Medium').length;
+  },
+  lRisk2() {
+    return this.filteredIssues2.filter(issue => issue.riskRating === 'Low').length;
+  },
+  mRisk2() {
+    return this.filteredIssues2.filter(issue => issue.riskRating === 'Medium').length;
+  },
+  hRisk2() {
+    return this.filteredIssues2.filter(issue => issue.riskRating === 'High').length;
+  }
+
+  },
+
+
 
   mounted()
   {
