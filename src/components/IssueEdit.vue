@@ -22,7 +22,8 @@
                 <label class="label" for= "risklevel">Risk Level: </label>
                 <br>
                 <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="issueDetail.riskRating">
-                <br>       
+                <br>   
+                    
             </div> 
             
             <div class="responsibledept">
