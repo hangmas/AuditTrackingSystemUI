@@ -2,6 +2,13 @@
 <div>
   <h1>Auditor Dashboard</h1>
     <h2>Outstanding Issues</h2>
+    <div>
+      <p><b><u>Total Outstanding Issue : {{ tRisk }}</u></b></p>
+    <p>Low Risk : <span style="color: green"><b>{{ lRisk }} ({{    (this.lRisk/this.tRisk) * 100 }}%)</b></span>
+    <br>Medium Risk : <span style="color: orange"><b>{{ mRisk }} ({{    (this.mRisk/this.tRisk) * 100 }}%)</b></span>
+    <br>High Risk : <span style="color: red"><b>{{ hRisk }} ({{    (this.hRisk/this.tRisk) * 100 }}%)</b></span>
+  </p>
+   </div>
     <label for="department-filter">Filter by department: </label>
     <select id="department-filter" v-model="selectedDepartment">
       <option value="">All departments</option>
@@ -29,6 +36,13 @@
 <br><br>
 <div>
     <h2>Closed Issues</h2>
+    <div>
+      <p><b>Total Outstanding Issue : {{ tRisk }}</b></p>
+    <p>Low Risk : <span style="color: green"><b>{{ lRisk }} ({{    (this.lRisk/this.tRisk) * 100 }}%)</b></span>
+    <br>Medium Risk : <span style="color: orange"><b>{{ mRisk }} ({{    (this.mRisk/this.tRisk) * 100 }}%)</b></span>
+    <br>High Risk : <span style="color: red"><b>{{ hRisk }} ({{    (this.hRisk/this.tRisk) * 100 }}%)</b></span>
+  </p>
+   </div>
     <label for="department-filter2">Filter by department: </label>
     <select id="department-filter2" v-model="selectedDepartment2">
       <option value="">All departments</option>
@@ -70,6 +84,8 @@
 import EmployeeDataService from '../services/EmployeeDataService'
 import IssueService from '../services/IssueService'
 
+
+
 export default{
 
 name: 'dashboardAuditor',
@@ -82,8 +98,13 @@ data()
       selectedDepartment2: "",
       employee : [],
       issuesList:[],
-      firstName : "",
+      lRisk : 0.0,
+      mRisk : 0.0,
+      hRisk : 0.0,
+      tRisk : 0.0,
       date: '', // variable to hold the date value
+
+    
     }
 
 },
@@ -94,8 +115,6 @@ data()
            EmployeeDataService.get()
             .then(response =>{
                 this.employee = response.data; //employee will save all the data 
-    //            this.firstNames.push(this.employee.firstName);           
-     //           console.log(this.firstNames);
             })
 
             .catch(error =>{
@@ -119,6 +138,13 @@ data()
                 issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
           });
 
+          this.issuesList.forEach(issue => {
+            if(issue.riskRating === 'Low' && issue.status ==='Outstanding') this.lRisk ++;
+            if(issue.riskRating === 'Medium' && issue.status ==='Outstanding') this.mRisk ++;
+            if(issue.riskRating === 'High' && issue.status ==='Outstanding') this.hRisk ++;
+            if(issue.status === 'Outstanding') this.tRisk++;
+          });
+        
             })
             .catch(error => {
                 console.log(error);
@@ -182,8 +208,7 @@ filteredIssues2() {
   {
     this.retrieveEmployee();
     this.retrieveIssue();
-
-
+   
   }
 };
 
@@ -208,6 +233,7 @@ filteredIssues2() {
         border-color: gray;
         
     }
+
 
 
 
