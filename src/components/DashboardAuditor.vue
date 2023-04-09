@@ -37,7 +37,7 @@
 <div>
     <h2>Closed Issues</h2>
     <div>
-      <p><b>Total Outstanding Issue : {{ tRisk2 }}</b></p>
+      <p><b><u>Total Outstanding Issue : {{ tRisk2 }}</u></b></p>
     <p>Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{    (this.lRisk2/this.tRisk2) * 100 }}%)</b></span>
     <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{    (this.mRisk2/this.tRisk2) * 100 }}%)</b></span>
     <br>High Risk : <span style="color: red"><b>{{ hRisk2 }} ({{    (this.hRisk2/this.tRisk2) * 100 }}%)</b></span>
@@ -141,13 +141,6 @@ data()
           //   if(issue.status === 'Outstanding') this.tRisk++;
           // });
 
-          
-          // this.issuesList.forEach(issue => {
-          //   if(issue.riskRating === 'Low' && issue.status ==='Closed') this.lRisk2 ++;
-          //   if(issue.riskRating === 'Medium' && issue.status ==='Closed') this.mRisk2 ++;
-          //   if(issue.riskRating === 'High' && issue.status ==='Closed') this.hRisk2 ++;
-          //   if(issue.status === 'Closed') this.tRisk2++;
-          // });
         
             })
             .catch(error => {
