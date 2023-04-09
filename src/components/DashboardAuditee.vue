@@ -86,8 +86,7 @@
                 .then(response =>{
                     this.employee = response.data; //employee will save all the data 
                     console.log(this.employee);
-        //            this.firstNames.push(this.employee.firstName);           
-         //           console.log(this.firstNames);
+
          this.employee.forEach(item => {
                     if(item.id === parseInt(eid))
                     {
