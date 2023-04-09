@@ -44,14 +44,14 @@
         <br>
         <button id="createnewissue" @click="createNewIssue">Create New Issue</button>
         <button id="cancelcreate" @click="cancelButton">Cancel</button>
-        <IssueList />
+        <!-- <IssueList /> -->
 
     </div>
 
 </template>
 <script>
 import IssueService from "@/services/IssueService";
-import IssueList from "./IssueList.vue"
+// import IssueList from "./IssueList.vue"
 export default{
     name: "IssueCreate",
     data(){
@@ -100,13 +100,14 @@ export default{
         cancelButton(event){
             event.preventDefault();
             this.$router.push({name:"IssuesPage"});
+
         }
 
     },
 
-    components: {
-        IssueList
-    }
+    // components: {
+    //     IssueList
+    // }
         
     
 

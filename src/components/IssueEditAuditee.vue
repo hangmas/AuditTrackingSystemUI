@@ -83,7 +83,7 @@ import IssueService from '@/services/IssueService';
 
 
     export default{
-        name: "IssueEdit",
+        name: "IssueEditAuditee",
         data(){
           return{
             issueDetail:{},

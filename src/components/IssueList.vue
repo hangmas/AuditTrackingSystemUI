@@ -23,7 +23,7 @@
         The {{ }} syntax is used to interpolate the values of each property into the table cell. -->
         
         </tr>
-        <tr v-for="(item, index) in issuesList" :key="index">
+        <tr v-for="(item, index) in issuesListToDisplay" :key="index">
            
             <!-- The :checked attribute is used to bind the checkbox's checked state to the checkedIndex === index expression. 
             The checkedIndex variable is a computed property,  and it's compared with index to determine if the checkbox should be checked or not. -->
@@ -55,10 +55,15 @@ export default{
         return {         
        
         issuesList:[],
+        issuesListToDisplay:[],
         employeeList:[],
         employeeName:"",
         checkedIndex:null,
-        selectedIssue:{},    
+        selectedIssue:{},
+        employeeTag:0,  //0= Auditee; 1=Auditor; 2=Admin
+        employeeId:0,
+        empDepartment:"",
+        filteredEmp:[]
            
     }
 },
@@ -69,8 +74,31 @@ methods: {
     retrieveIssue(){
         IssueService.getIssues()
             .then(response =>{
+                
+                //this.employeeId = localStorage.getItem('eid');   //for now employee ID is fixed.
+                //get the employee tag
+                this.employeeId=1;
                 this.issuesList = response.data;
-                console.log(this.issuesList);  
+
+                if(this.employeeTag==1){
+                    this.issuesListToDisplay=this.issuesList;
+                }else{
+                    EmployeeDataService.get()
+                        .then(response =>{
+                            
+                            this.employeeList = response.data;
+                            this.filteredEmp=this.employeeList.filter(employee => employee.id==this.employeeId);
+                            this.empDepartment= this.filteredEmp[0].department;  
+                            console.log(this.empDepartment);
+                            this.issuesListToDisplay=this.issuesList.filter((issue) => issue.departmentResponsible === this.empDepartment);
+                                                                         
+                        })
+                        .catch(error =>{
+                            console.log(error);
+                        })
+
+                }
+                    
 
             })
             .catch(error => {
@@ -82,8 +110,11 @@ methods: {
     retrieveEmployee(){
         EmployeeDataService.get()
             .then(response =>{
+                this.employeeId =1;
                 this.employeeList = response.data;
-                
+                this.filteredEmp=this.employeeList.filter(employee => employee.id==this.employeeId);
+                this.empDepartment= this.filteredEmp[0].department;                  
+                                         
             })
             .catch(error =>{
                 console.log(error);
@@ -96,13 +127,17 @@ methods: {
         this.selectedIssue = this.issuesList[index];
         //console.log(this.selectedIssue);
         
-    }
+    },
+
+    
   
 },
 
 mounted(){
+
+//this.retrieveEmployee();
+//this.filteredIssues();
 this.retrieveIssue();
-this.retrieveEmployee();
 
 
 

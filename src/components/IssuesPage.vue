@@ -3,7 +3,7 @@
         <button id="CreateButton" @click=handleCreateIssue>Create</button>
         <button id="EditButton" @click="handleEditIssue">Edit</button>
         <button id="DeleteButton">Delete</button>
-        <button id="View Details">View Details</button>
+        <button id="View Details" @click="handleViewIssue">View Details</button>
     </div>
     <div>
         <IssueList :getSelectedIssue="getSelectedIssue"/>
@@ -47,6 +47,16 @@ export default {
             this.selectedIssueChecked = selectedIssue;
             localStorage.setItem("selectedIssuePassed",JSON.stringify(this.selectedIssueChecked));
            
+        },
+
+        handleViewIssue(event){
+            event.preventDefault();
+            const isEmpty = Object.keys(this.selectedIssueChecked).length === 0;
+            if(isEmpty){
+                window.alert("Please check one of the issues you want to view");
+            }else{
+                this.$router.push({name:"IssueViewDetail"});
+            }
         }
     }
 }

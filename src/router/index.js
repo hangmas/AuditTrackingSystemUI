@@ -5,6 +5,7 @@ import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
 import IssueCreate from "../components/IssueCreate.vue"
 import IssueEdit from "../components/IssueEdit.vue"
+import IssueViewDetail from "../components/IssueViewDetail.vue"
 
 const routes =[
 {
@@ -43,6 +44,13 @@ component : dashboardAuditor
     name: "IssueEdit",
     component: IssueEdit
 },
+
+{
+    path: "/viewIssues",
+    name: "IssueViewDetail",
+    component: IssueViewDetail
+
+}
 
 
 ];//this is an array containing the path which is the url
