@@ -13,6 +13,7 @@
             <th>Person Responsible</th>
             <th>Department Responsible</th>
             <th>Approved DeadLine</th>
+            <th>Status</th>
         
         <!-- This following code creates a table row for each item in the issuesList array using the v-for directive. 
         The :key binding is used to provide a unique identifier for each row.
@@ -33,8 +34,9 @@
             <td>{{ new Date(item.issueDate * 1000).toLocaleDateString() }}</td>
             <td>{{ item.riskRating  }}</td>
             <td>{{ item.auditee.employee.firstName }} {{ item.auditee.employee.lastName }}</td>
-            <td>{{ item.departmentResponsible }}</td>
+            <td>{{ item.departmentResponsible }}</td>          
             <td>{{ new Date(item.approvedDeadline * 1000).toLocaleDateString() }}</td>
+            <td>{{ item.status }}</td>
             
         </tr>
     </table>
