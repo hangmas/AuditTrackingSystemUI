@@ -35,7 +35,7 @@
             <td>{{ item.riskRating  }}</td>
             <td>{{ item.auditee.employee.firstName }} {{ item.auditee.employee.lastName }}</td>
             <td>{{ item.departmentResponsible }}</td>          
-            <td>{{ new Date(item.approvedDeadline * 1000).toLocaleDateString() }}</td>
+            <td>{{ new Date(item.approvedDeadline * 1000).toLocaleDateString('en-US', { timeZone: 'America/New_York' }) }}</td>
             <td>{{ item.status }}</td>
             
         </tr>

@@ -205,8 +205,11 @@ import IssueService from '@/services/IssueService';
                     this.numberOfDaysOverdue = noOfDaysDueComputed;
                 }
 
-                const timestampApprovedDeadLine = new Date(this.approvedDateNC).getTime() / 1000;
-                this.issueDetail.approvedDeadline = timestampApprovedDeadLine;
+                const timestampApprovedDeadline = Date.parse(new Date(this.approvedDateNC).toISOString()) / 1000;
+                this.issueDetail.approvedDeadline = timestampApprovedDeadline;
+                
+                // const timestampApprovedDeadLine = new Date(this.approvedDateNC).getTime() / 1000;
+                // this.issueDetail.approvedDeadline = timestampApprovedDeadLine;
 
                 //compiles all variables to an object that is acceptable by the api for posting
                 this.issueDetailChanges={
