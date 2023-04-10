@@ -71,7 +71,7 @@
                 <br>
                 <br>
                 <button id="updateissuebutton" @click="handleSaveUpdateIssueButton">SAVE CHANGES</button>
-                <button id="cancelupdateissuebutton" @click="handlerCancelUpdateIssueButton">CANCEL</button>
+                <button id="cancelupdateissuebutton" @click="handlerCancelUpdateIssueButton">BACK TO ISSUE LIST</button>
 
             </div>
     </div>
@@ -227,6 +227,7 @@ import IssueService from '@/services/IssueService';
                             console.log(error);
                         })
                 }
+                window.alert("You have successfully saved the issue record!");
 
             }
 
