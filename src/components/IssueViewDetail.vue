@@ -38,7 +38,6 @@
             <tr>                
                 <th>Date</th>
                 <th>Actions Taken</th>
-                <th>Issue Status</th>
                 <th>No of Due Days</th>
                 <th>New Approved Timeline</th>
             </tr>
@@ -48,9 +47,8 @@
                 The checkedIndex variable is a computed property,  and it's compared with index to determine if the checkbox should be checked or not. -->
                 <td>{{ new Date(item.todayDate * 1000).toLocaleDateString() }}</td>
                 <td>{{ item.actionTaken }}</td>
-                <td>{{ issueDetailView.status }}</td>
                 <td>{{ item.noOfDaysDue  }}</td>
-                <td>{{new Date(item.newlyApprovedDate * 1000).toLocaleDateString()  }}</td>
+                <td>{{ item.newlyApprovedDate === 0 ? '' : new Date(item.newlyApprovedDate * 1000).toLocaleDateString() }}</td>
                         
         </tr>
         </table>

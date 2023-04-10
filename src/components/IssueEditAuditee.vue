@@ -59,8 +59,8 @@
                 <label class="label" for="statusofissue">Status of Issue: </label>
                 <br>
                 <select class="issuestatus" name="issuestatus" v-model="issueStatus" @change="handlerStatus">
-                    <option value="outstanding" selected>Outstanding</option>
-                    <option value="closed">Closed</option>
+                    <option value="Outstanding" selected>Outstanding</option>
+                    <option value="Closed">Closed</option>
                 </select>
                 <br>
                 <br>
@@ -95,7 +95,7 @@ import IssueService from '@/services/IssueService';
             newAction:"",
             newTimeline:"",
             newTimelineConverted:0,
-            issueStatus:"outstanding",
+            issueStatus:"Outstanding",
             issueStatusSelection:"",
             dateOfEdit:"",
             dateClosed:"",
@@ -143,7 +143,7 @@ import IssueService from '@/services/IssueService';
             handlerStatus(event){
                 event.preventDefault();
                 this.issueStatusSelection = this.issueStatus;
-                if(this.issueStatusSelection=="closed"){
+                if(this.issueStatusSelection=="Closed"){
                     this.showDateField=true;
                 }else{
                     this.showDateField=false;
@@ -210,7 +210,8 @@ import IssueService from '@/services/IssueService';
                 if(!this.newAction==""){
                     this.actionDetail={
                         actionTaken:this.newAction,
-                        todaydate:this.todayDateConverted,
+                        todayDate:this.todayDateConverted,
+                        status:this.issueStatus,
                         closingDate:this.dateClosedConverted,
                         noOfDaysDue:this.numberOfDaysOverdue,
                         newlyApprovedDate:this.newTimelineConverted

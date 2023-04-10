@@ -189,7 +189,7 @@ methods: {
                 }
 
             }else if(this.employeeTag == 1){
-                
+                this.issuesListToDisplay= this.issueListUnpacked;
                 if(this.selectedFiltering=="outstanding"){
                     this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.status ==="Outstanding");
                 } else if(this.selectedFiltering=="closed"){

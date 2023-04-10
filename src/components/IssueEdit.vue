@@ -21,7 +21,13 @@
                 <br>       
                 <label class="label" for= "risklevel">Risk Level: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="issueDetail.riskRating">
+                <select class="risklevel" name="risklevel" v-model="issueDetail.riskRating">
+                    <option value="High" selected>High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+                
+                <!-- <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="issueDetail.riskRating"> -->
                 <br>   
                     
             </div> 
@@ -59,8 +65,8 @@
                 <label class="label" for="statusofissue">Status of Issue: </label>
                 <br>
                 <select class="issuestatus" name="issuestatus" v-model="issueStatus" @change="handlerStatus">
-                    <option value="outstanding" selected>Outstanding</option>
-                    <option value="closed">Closed</option>
+                    <option value="Outstanding" selected>Outstanding</option>
+                    <option value="Closed">Closed</option>
                 </select>
                 <br>
                 <br>
@@ -95,7 +101,7 @@ import IssueService from '@/services/IssueService';
             newAction:"",
             newTimeline:"",
             newTimelineConverted:0,
-            issueStatus:"outstanding",
+            issueStatus:"Outstanding",
             issueStatusSelection:"",
             dateOfEdit:"",
             dateClosed:"",
@@ -115,6 +121,18 @@ import IssueService from '@/services/IssueService';
             if(issueDetailPassed){
                 this.issueDetail = JSON.parse(issueDetailPassed);       
             }
+            },
+
+            handlerStatus(event){
+                event.preventDefault();
+                this.issueStatusSelection = this.issueStatus;
+                if(this.issueStatusSelection=="Closed"){
+                    this.showDateField=true;
+                }else{
+                    this.showDateField=false;
+                }
+
+                console.log(this.issueStatusSelection);
             },
 
             //converts the long format date to a Date format
@@ -138,9 +156,8 @@ import IssueService from '@/services/IssueService';
                 this.email = this.issueDetail.auditee.employee.email;
                 this.personresponsible=this.issueDetail.auditee.employee.firstName+" "+this.issueDetail.auditee.employee.lastName;
             },
-            
-            //method to handle the event where based on the value of the selection, the visibility of some fields are determined
-            handlerStatus(event){
+
+            handlerRisk(event){
                 event.preventDefault();
                 this.issueStatusSelection = this.issueStatus;
                 if(this.issueStatusSelection=="closed"){
@@ -151,7 +168,9 @@ import IssueService from '@/services/IssueService';
 
                 console.log(this.issueStatusSelection);
             },
-
+            
+            //method to handle the event where based on the value of the selection, the visibility of some fields are determined
+            
             //method to convert the date format to long to fit into the database
             updateTimestampDateClosed() {
             const timestamp = new Date(this.dateClosed).getTime() / 1000;
@@ -177,7 +196,7 @@ import IssueService from '@/services/IssueService';
                 
                 //this gets the date format converted to long format to be posted to the database
                 const todayDate = new Date();
-                const timestamp = new Date(todayDate).getTime() / 1000;
+                const timestamp = Math.floor(todayDate.getTime() / 1000);
                 this.todayDateConverted = timestamp;
 
                 //this computes the number of days overdue from the approved timeline to the current date
@@ -215,7 +234,8 @@ import IssueService from '@/services/IssueService';
                 if(!this.newAction==""){
                     this.actionDetail={
                         actionTaken:this.newAction,
-                        todaydate:this.todayDateConverted,
+                        todayDate:this.todayDateConverted,
+                        status:this.issueStatus,
                         closingDate:this.dateClosedConverted,
                         noOfDaysDue:this.numberOfDaysOverdue,
                         newlyApprovedDate:this.newTimelineConverted
