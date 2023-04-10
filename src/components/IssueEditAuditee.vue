@@ -1,27 +1,27 @@
 <template>
     <div>
-        <h3 id="editIssueHeader">Edit Issue</h3>
+        <h3 id="editIssueHeader">Edit Issue (You can only perfom actions in "Updates of Issue" section)</h3>
         <div class="editIssueBody">
             <div class="editissuedetails">
                 <label class="label" for="auditreporttitle">Audit Report Title: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="auditreporttitletext" id="auditreporttitletextid" placeholder="" v-model="issueDetail.reportTitle">
+                <input class="inputtext" type="inputtext" name="auditreporttitletext" id="auditreporttitletextid" placeholder="" v-model="issueDetail.reportTitle" readonly>
                 <br>        
                 <label class="label" for="issuetitle">Audit Issue Title: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="auditissuetitletext" id="auditissuetitletextid" placeholder="" v-model="issueDetail.issueTitle">        
+                <input class="inputtext" type="inputtext" name="auditissuetitletext" id="auditissuetitletextid" placeholder="" v-model="issueDetail.issueTitle" readonly >        
                 <br>     
                 <label class="label" for= "issueDate">Issue Date: </label>
                 <br>
-                <input class="inputtext" type="date" name="issuedate" id="issuedateid" placeholder="" v-model="issueDateNC">
+                <input class="inputtext" type="date" name="issuedate" id="issuedateid" placeholder="" v-model="issueDateNC" readonly>
                 <br>           
                 <label class="label" for= "approveddeadline">Approved Deadline: </label>
                 <br>
-                <input class="inputtext" type="date" name="approveddeadlineetext" id="approveddeadlineid" placeholder="" v-model="approvedDateNC">
+                <input class="inputtext" type="date" name="approveddeadlineetext" id="approveddeadlineid" placeholder="" v-model="approvedDateNC" readonly>
                 <br>       
                 <label class="label" for= "risklevel">Risk Level: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="issueDetail.riskRating">
+                <input class="inputtext" type="inputtext" name="riskleveltext" id="risklevelid" placeholder="" v-model="issueDetail.riskRating" readonly>
                 <br>   
                     
             </div> 
@@ -29,7 +29,7 @@
             <div class="responsibledept">
                 <label class="label" for="departmentresponsible">Department Responsible: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="" v-model="issueDetail.departmentResponsible">
+                <input class="inputtext" type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="" v-model="issueDetail.departmentResponsible" readonly>
                 <br>        
                 <label class="label" for="personresponsible">Person Responsible: </label>
                 <br>
@@ -37,7 +37,7 @@
                 <br>        
                 <label class="label" for="emailresponsible">E-mail Address: </label>
                 <br>
-                <input class="inputtext" type="inputtext" name="emailtext" id="emailid" placeholder="" v-model="email">
+                <input class="inputtext" type="inputtext" name="emailtext" id="emailid" placeholder="" v-model="email" readonly>
                 <br>
             </div>
             <br>
@@ -83,7 +83,7 @@ import IssueService from '@/services/IssueService';
 
 
     export default{
-        name: "IssueEdit",
+        name: "IssueEditAuditee",
         data(){
           return{
             issueDetail:{},
@@ -108,7 +108,7 @@ import IssueService from '@/services/IssueService';
             
         },
         methods:{
-            //this method gets the selected item from the locatStorage
+            //this method gets the selected item from the locatStorage.  upon selection of the user, the item is stored in the local storage
             getIssueDetail(){
             const issueDetailPassed = localStorage.getItem('selectedIssuePassed');
             console.log(issueDetailPassed);
@@ -117,7 +117,7 @@ import IssueService from '@/services/IssueService';
             }
             },
 
-            //converts the long format date to a Date format
+            //converts the long formate date to a date format
             updateTimestamp1() {
                 const timestamp = this.issueDetail.issueDate;
                 const date = new Date(timestamp * 1000);
@@ -125,7 +125,7 @@ import IssueService from '@/services/IssueService';
                 this.issueDateNC = formattedDate;
             },
 
-             //converts the long format date to a Date format
+             //converts the long formate date to a date format
             updateTimestamp2() {
                 const timestamp = this.issueDetail.approvedDeadline;
                 const date = new Date(timestamp * 1000);
@@ -133,7 +133,7 @@ import IssueService from '@/services/IssueService';
                 this.approvedDateNC = formattedDate;
             },
 
-            //this method stores the email and the person responsible
+            //gets the email and responsible person from the selected item for display
             getEmailAndPerson(){
                 this.email = this.issueDetail.auditee.employee.email;
                 this.personresponsible=this.issueDetail.auditee.employee.firstName+" "+this.issueDetail.auditee.employee.lastName;
@@ -166,21 +166,17 @@ import IssueService from '@/services/IssueService';
             console.log(this.newTimelineConverted);
             },
 
-            //to handle the cancel button merely to return to the issue list page
             handlerCancelUpdateIssueButton(){
-                this.$router.push({name:"IssuesPage"});
+                this.$router.push({name:"IssuePageAuditee"});
                 this.issueDetail={};
             },
 
-            //method to handle the save button
+            //this saves the updates made by the user.  it involves converting dates to long format for acceptance into the repository
             handleSaveUpdateIssueButton(){
-                
-                //this gets the date format converted to long format to be posted to the database
                 const todayDate = new Date();
                 const timestamp = new Date(todayDate).getTime() / 1000;
                 this.todayDateConverted = timestamp;
 
-                //this computes the number of days overdue from the approved timeline to the current date
                 let noOfDaysDueComputed = Math.floor((this.todayDateConverted - this.issueDetail.approvedDeadline)/86400);
                 if(noOfDaysDueComputed<=0){
                     this.numberOfDaysOverdue = 0;
@@ -191,7 +187,6 @@ import IssueService from '@/services/IssueService';
                 const timestampApprovedDeadLine = new Date(this.approvedDateNC).getTime() / 1000;
                 this.issueDetail.approvedDeadline = timestampApprovedDeadLine;
 
-                //compiles all variables to an object that is acceptable by the api for posting
                 this.issueDetailChanges={
                     id:this.issueDetail.id,
                     reportTitle:this.issueDetail.reportTitle,
@@ -202,7 +197,7 @@ import IssueService from '@/services/IssueService';
                     empEmail:this.email
                 }
 
-                //calls the service to update issues and actions
+                //this calls the service to update the issue and actions into the repository
                 IssueService.updateIssuesAndActions(this.issueDetailChanges)
                     .then(response =>{
                         console.log(response.data);
@@ -211,7 +206,7 @@ import IssueService from '@/services/IssueService';
                         console.log(error);
                     })
 
-                //this sets a condition the if new action is indicated in the text field, the creation of an object for posting will be performed
+                //the new action is added if present
                 if(!this.newAction==""){
                     this.actionDetail={
                         actionTaken:this.newAction,
@@ -221,7 +216,7 @@ import IssueService from '@/services/IssueService';
                         newlyApprovedDate:this.newTimelineConverted
                     
                     }
-                    //service to create issue action.  using the above values, these are used to be posted into the repository
+                    //service to create issue action
                      IssueService.createIssueAction(this.issueDetail.id,this.actionDetail)
                         .then(response =>{
                             console.log(response.data);

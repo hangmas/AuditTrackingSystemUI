@@ -29,11 +29,7 @@
                 <label class="label" for="departmentresponsible">Department Responsible: </label>
                 <br>
                 <input class="inputtext" type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="" v-model="issueData.departmentResponsible">
-                <br>        
-                <label class="label" for="personresponsible">Person Responsible: </label>
-                <br>
-                <input class="inputtext" type="inputtext" name="personresponsibletext" id="personresponsibleid" placeholder="" v-model="personresponsible">       
-                <br>        
+                <br>                     
                 <label class="label" for="emailresponsible">E-mail Address: </label>
                 <br>
                 <input class="inputtext" type="inputtext" name="emailtext" id="emailid" placeholder="" v-model="issueData.empEmail">
@@ -44,14 +40,14 @@
         <br>
         <button id="createnewissue" @click="createNewIssue">Create New Issue</button>
         <button id="cancelcreate" @click="cancelButton">Cancel</button>
-        <IssueList />
+        <!-- <IssueList /> -->
 
     </div>
 
 </template>
 <script>
 import IssueService from "@/services/IssueService";
-import IssueList from "./IssueList.vue"
+// import IssueList from "./IssueList.vue"
 export default{
     name: "IssueCreate",
     data(){
@@ -74,6 +70,7 @@ export default{
     },
     methods: {
 
+        //calling the service to create an issue
         createNewIssue(){
             IssueService.createIssue(this.issueData)
                 .then(response =>{
@@ -86,30 +83,27 @@ export default{
         
         },
 
+        //converted the date into a long format for database
         updateTimestamp1() {
             const timestamp = new Date(this.issueDateNC).getTime() / 1000;
             this.issueData.issueDate = timestamp;
             },
-
+        
+         //converted the date into a long format for database
         updateTimestamp2() {
             const timestamp = new Date(this.issueDateNC).getTime() / 1000;
             this.issueData.approvedDeadline = timestamp;
             },
 
-
+        //handler for the cancel button. it goes back to the issue list page
         cancelButton(event){
             event.preventDefault();
             this.$router.push({name:"IssuesPage"});
+
         }
 
     },
-
-    components: {
-        IssueList
-    }
-        
     
-
 }
 </script>
 <style scoped>

@@ -5,6 +5,9 @@ import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
 import IssueCreate from "../components/IssueCreate.vue"
 import IssueEdit from "../components/IssueEdit.vue"
+import IssueViewDetail from "../components/IssueViewDetail.vue"
+import IssuePageAuditee from "../components/IssuePageAuditee.vue"
+import IssueEditAuditee from "../components/IssueEditAuditee.vue"
 
 const routes =[
 {
@@ -42,6 +45,26 @@ component : dashboardAuditor
     path: "/editIssues",
     name: "IssueEdit",
     component: IssueEdit
+},
+
+{
+    path: "/viewIssues",
+    name: "IssueViewDetail",
+    component: IssueViewDetail
+
+},
+{
+    path: "/issuepageauditee",
+    name: "IssuePageAuditee",
+    component: IssuePageAuditee
+
+},
+
+{
+    path: "/issueeditauditee",
+    name: "IssueEditAuditee",
+    component: IssueEditAuditee
+
 },
 
 
