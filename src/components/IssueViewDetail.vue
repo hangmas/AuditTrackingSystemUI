@@ -73,10 +73,13 @@ export default{
             actionsList:{},
             email:"",
             personResponsible:"",
+            employeeTag:0,  //0= Auditee; 1=Auditor; 2=Admin
         }
         
     },
     methods:{
+
+            //method to get the issue details.  it includes getting from the local storage the value of the particular issue to be edited
             getIssueDetail(){
             const issueDetailPassed = localStorage.getItem('selectedIssuePassed');
             console.log(issueDetailPassed);
@@ -86,6 +89,7 @@ export default{
             }
             },
 
+            //method to get the email and name of the person for display
             getEmailAndPerson() {
                 if (this.issueDetailView && this.issueDetailView.auditee && this.issueDetailView.auditee.employee) {
                     this.email = this.issueDetailView.auditee.employee.email;
@@ -97,6 +101,8 @@ export default{
                 }
             },
 
+            //method to retrieve the history of actions taken to a particular issue
+            //it uses the service setup in IssueService file
             retrieveActions(){
             IssueService.getIssueActions(this.issueDetailView.id)
                 .then(response =>{
@@ -109,9 +115,21 @@ export default{
                 })
             },
 
+            //handle the back button in the view detail page
             handlerBackToListButton(event){
                 event.preventDefault();
-                this.$router.push({name:"IssuesPage"});
+                if(this.employeeTag== 1){
+                    this.$router.push({name:"IssuesPage"});
+                } else if (this.employeeTag== 0){
+                    this.$router.push({name:"IssuePageAuditee"});
+                }
+                
+            },
+
+            employeeTagSet(){
+               // const employeeTagLocal = 
+                this.employeeTag = 0;
+
             }
 
 
@@ -121,6 +139,7 @@ export default{
         this.getIssueDetail();
         this.getEmailAndPerson();
         this.retrieveActions();
+        this.employeeTagSet();
         
     },
     

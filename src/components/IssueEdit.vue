@@ -116,6 +116,8 @@ import IssueService from '@/services/IssueService';
                 this.issueDetail = JSON.parse(issueDetailPassed);       
             }
             },
+
+            //converts the long format date to a Date format
             updateTimestamp1() {
                 const timestamp = this.issueDetail.issueDate;
                 const date = new Date(timestamp * 1000);
@@ -123,6 +125,7 @@ import IssueService from '@/services/IssueService';
                 this.issueDateNC = formattedDate;
             },
 
+             //converts the long format date to a Date format
             updateTimestamp2() {
                 const timestamp = this.issueDetail.approvedDeadline;
                 const date = new Date(timestamp * 1000);
@@ -130,6 +133,7 @@ import IssueService from '@/services/IssueService';
                 this.approvedDateNC = formattedDate;
             },
 
+            //this method stores the email and the person responsible
             getEmailAndPerson(){
                 this.email = this.issueDetail.auditee.employee.email;
                 this.personresponsible=this.issueDetail.auditee.employee.firstName+" "+this.issueDetail.auditee.employee.lastName;
@@ -162,17 +166,21 @@ import IssueService from '@/services/IssueService';
             console.log(this.newTimelineConverted);
             },
 
+            //to handle the cancel button merely to return to the issue list page
             handlerCancelUpdateIssueButton(){
                 this.$router.push({name:"IssuesPage"});
                 this.issueDetail={};
             },
 
-
+            //method to handle the save button
             handleSaveUpdateIssueButton(){
+                
+                //this gets the date format converted to long format to be posted to the database
                 const todayDate = new Date();
                 const timestamp = new Date(todayDate).getTime() / 1000;
                 this.todayDateConverted = timestamp;
 
+                //this computes the number of days overdue from the approved timeline to the current date
                 let noOfDaysDueComputed = Math.floor((this.todayDateConverted - this.issueDetail.approvedDeadline)/86400);
                 if(noOfDaysDueComputed<=0){
                     this.numberOfDaysOverdue = 0;
@@ -183,6 +191,7 @@ import IssueService from '@/services/IssueService';
                 const timestampApprovedDeadLine = new Date(this.approvedDateNC).getTime() / 1000;
                 this.issueDetail.approvedDeadline = timestampApprovedDeadLine;
 
+                //compiles all variables to an object that is acceptable by the api for posting
                 this.issueDetailChanges={
                     id:this.issueDetail.id,
                     reportTitle:this.issueDetail.reportTitle,
@@ -193,6 +202,7 @@ import IssueService from '@/services/IssueService';
                     empEmail:this.email
                 }
 
+                //calls the service to update issues and actions
                 IssueService.updateIssuesAndActions(this.issueDetailChanges)
                     .then(response =>{
                         console.log(response.data);
@@ -201,7 +211,7 @@ import IssueService from '@/services/IssueService';
                         console.log(error);
                     })
 
-                
+                //this sets a condition the if new action is indicated in the text field, the creation of an object for posting will be performed
                 if(!this.newAction==""){
                     this.actionDetail={
                         actionTaken:this.newAction,
@@ -211,7 +221,7 @@ import IssueService from '@/services/IssueService';
                         newlyApprovedDate:this.newTimelineConverted
                     
                     }
-                    //service to create issue action
+                    //service to create issue action.  using the above values, these are used to be posted into the repository
                      IssueService.createIssueAction(this.issueDetail.id,this.actionDetail)
                         .then(response =>{
                             console.log(response.data);

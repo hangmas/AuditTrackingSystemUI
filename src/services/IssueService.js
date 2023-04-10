@@ -21,6 +21,11 @@ class IssueService {
     updateIssuesAndActions(data){
         return http.put("/issue",data)
     }
+
+    deleteIssue(id){
+        return http.delete(`/issue/${id}`)
+    }
+
 }
 
 export default new IssueService();

@@ -49,22 +49,31 @@ import IssueService from '@/services/IssueService';
 export default{
     name: "IssueList",
     props:{
-        getSelectedIssue: Function
+        //this props set up at the parent component(Issue Page) allows the function to be used in this component
+        //this gets the object representing selected issue from the list of issues so that this can be used at the parent component
+        getSelectedIssue: Function,
+        //the string property receives the values from the select element at the parent component.  any change to this will do filtering to the list of issues
+        selectedFiltering: String
+        
     },
     data(){
         return {         
        
         issuesList:[],
+        issuesListAuditee:[],
         issuesListToDisplay:[],
         employeeList:[],
+        employeeListUnpacked:[],
+        issueListUnpacked:[],
         employeeName:"",
         checkedIndex:null,
         selectedIssue:{},
-        employeeTag:0,  //0= Auditee; 1=Auditor; 2=Admin
+        employeeTag:1,  //0= Auditee; 1=Auditor; 2=Admin
         employeeId:0,
         empDepartment:"",
-        filteredEmp:[]
-           
+        filteredEmp:[],
+        filteredEmpDep:""
+                 
     }
 },
 
@@ -74,84 +83,160 @@ methods: {
     retrieveIssue(){
         IssueService.getIssues()
             .then(response =>{
-                
-                //this.employeeId = localStorage.getItem('eid');   //for now employee ID is fixed.
-                //get the employee tag
-                this.employeeId=1;
+            
                 this.issuesList = response.data;
-
-                if(this.employeeTag==1){
-                    this.issuesListToDisplay=this.issuesList;
-                }else{
-                    EmployeeDataService.get()
-                        .then(response =>{
-                            
-                            this.employeeList = response.data;
-                            this.filteredEmp=this.employeeList.filter(employee => employee.id==this.employeeId);
-                            this.empDepartment= this.filteredEmp[0].department;  
-                            console.log(this.empDepartment);
-                            this.issuesListToDisplay=this.issuesList.filter((issue) => issue.departmentResponsible === this.empDepartment);
-                                                                         
-                        })
-                        .catch(error =>{
-                            console.log(error);
-                        })
-
-                }
-                    
-
+                //this approach of storing all issues into the local repository is done to address the error on delayed actions from vue and the repository
+                //resulting to some of the values not obtained for use by other functions resulting to empty variables hence causing errors
+                localStorage.setItem("issuesList",JSON.stringify(this.issuesList));  
             })
             .catch(error => {
                 console.log(error);
             })
     },
 
+    
     //retrieve all employees
     retrieveEmployee(){
         EmployeeDataService.get()
             .then(response =>{
-                this.employeeId =1;
+                this.employeeId =2;
                 this.employeeList = response.data;
-                this.filteredEmp=this.employeeList.filter(employee => employee.id==this.employeeId);
-                this.empDepartment= this.filteredEmp[0].department;                  
-                                         
+                //this approach is similar to above to address the delay of response from the repository
+                localStorage.setItem("listEmployeePassed",JSON.stringify(this.employeeList));                                                       
             })
             .catch(error =>{
                 console.log(error);
             })
 
     },
-    //set the value of index when the row is checked.
-    updateCheckbox(index) {
-        this.checkedIndex = index;
-        this.selectedIssue = this.issuesList[index];
-        //console.log(this.selectedIssue);
+
+    //the store list of employees in the local repository is unpacked and stored in a local variable to be used.
+    unpackEmployee(){
+       
+            const employeeListObtained = localStorage.getItem('listEmployeePassed');
+            this.employeeId= 2;
+            if(employeeListObtained){
+                this.employeeListUnpacked = JSON.parse(employeeListObtained);
+                
+                console.log(this.employeeListUnpacked);       
+            }      
+
+    },
+
+    //after the local storage is unpacked, the values are used for subsequent actions. for loop method is used for this approach
+    //some flexibilty on use of functions as some don't work or unfamiliar
+    filterEmployee(){
+        this.employeeId= 1;
+        let filteredEmp=[];
+        let filteredEmployeeDepartment="";
+        
+        for(let i = 0; i<this.employeeListUnpacked.length;i++){
+            if(this.employeeListUnpacked[i].id==this.employeeId){
+                filteredEmp = this.employeeListUnpacked[i];
+                filteredEmployeeDepartment = filteredEmp.department;
+            }
+        } 
+        
+        this.filteredEmpDep = filteredEmployeeDepartment;
+         
+    },
+
+    //this is to unpack the local storage for subsequent use
+    unpackIssue(){      
+        const issueListObtained = localStorage.getItem('issuesList');
+            if(issueListObtained){
+                this.issueListUnpacked = JSON.parse(issueListObtained);
+              
+            }   
+
+            console.log(this.issueListUnpacked);
         
     },
 
-    
-  
+    //method adopted to to filter the issue for the desired display
+    filterIssueForAuditee(){
+        let unpackedIssueLocal = this.issueListUnpacked;
+        let issueListAuditeeLocal = [];
+        for(let i = 0; i<unpackedIssueLocal.length;i++){
+                 if(unpackedIssueLocal[i].departmentResponsible==this.filteredEmpDep){             
+                    issueListAuditeeLocal.push(unpackedIssueLocal[i]);            
+            }
+        } 
+
+        this.issuesListAuditee = issueListAuditeeLocal;
+
+    },
+
+    //display functions to support the filter button.  any values from the selection at the issues list page will perfom filtering
+    displayIssues(){
+                
+            if(this.employeeTag == 0){
+                this.issuesListToDisplay = this.issuesListAuditee;
+                if(this.selectedFiltering=="outstanding"){
+                    this.issuesListToDisplay = this.issuesListAuditee.filter(issue => issue.status ==="Outstanding");
+                } else if(this.selectedFiltering=="closed"){
+                    this.issuesListToDisplay = this.issuesListAuditee.filter(issue => issue.status ==="Closed");
+                } else if(this.selectedFiltering=="highrisk"){
+                    this.issuesListToDisplay = this.issuesListAuditee.filter(issue => issue.riskRating ==="High");
+                } else if(this.selectedFiltering=="mediumrisk"){
+                    this.issuesListToDisplay = this.issuesListAuditee.filter(issue => issue.riskRating ==="Medium");
+                }else if(this.selectedFiltering=="lowrisk"){
+                    this.issuesListToDisplay = this.issuesListAuditee.filter(issue => issue.riskRating ==="Low");
+                }else{
+                    this.issuesListToDisplay= this.issuesListAuditee;
+                }
+
+            }else if(this.employeeTag == 1){
+                
+                if(this.selectedFiltering=="outstanding"){
+                    this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.status ==="Outstanding");
+                } else if(this.selectedFiltering=="closed"){
+                    this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.status ==="Closed");
+                } else if(this.selectedFiltering=="highrisk"){
+                    this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.riskRating ==="High");
+                } else if(this.selectedFiltering=="mediumrisk"){
+                    this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.riskRating ==="Medium");
+                }else if(this.selectedFiltering=="lowrisk"){
+                    this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.riskRating ==="Low");
+                }else{
+                    this.issuesListToDisplay= this.issueListUnpacked;
+                }
+
+                }
+      },
+
+    //set the value of index when the row is checked.
+    updateCheckbox(index) {
+        this.checkedIndex = index;
+        this.selectedIssue = this.issuesList[index];     
+        
+    },
+
+},
+
+watch:{
+    //watch object to watch any update to the String selectedFiltering
+    selectedFiltering(){
+        this.displayIssues();
+    }
 },
 
 mounted(){
-
-//this.retrieveEmployee();
-//this.filteredIssues();
-this.retrieveIssue();
-
-
-
+    //these methods run when the page loads
+    this.retrieveIssue();
+    this.retrieveEmployee();
+    this.unpackEmployee();
+    this.filterEmployee();
+    this.unpackIssue();
+    this. filterIssueForAuditee();
+    this.displayIssues();
 }
 }
-
-
 </script>
 
 <style scoped>
     table.issuelisttable {
-        border:10px;
-        
-        
+        border:10px;   
     }
     table.issuelisttable th {
         border: 1px;
@@ -166,7 +251,5 @@ this.retrieveIssue();
         border-color: gray;
         
     }
-
-
 
 </style>
