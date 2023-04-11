@@ -8,8 +8,7 @@
             <select class="filterbutton" name="filterbutton" v-model="filterLabel" @change="handlerStatus">
                     <option value="filterlabel" selected>Filter</option>
                     <option value="outstanding" >By Outstanding Issues</option>
-                    <option value="closed">By Closed Issues</option>
-                    <option value="department">By Department</option>                   
+                    <option value="closed">By Closed Issues</option>                
                     <option value="highrisk">By High Risk Issues</option>
                     <option value="mediumrisk">By Medium Risk Issues</option>
                     <option value="lowrisk">By Low Risk Issues</option>
@@ -72,23 +71,29 @@ export default {
                 window.alert("Please place a checkmark before an issue you want to delete");
             }else{
                 if (window.confirm('Are you sure you want to proceed?')) {   
-                    console.log("Yes to delete") 
+            
               
                    IssueService.deleteIssue(this.selectedIssueChecked.id)
                     .then(response =>{
                         console.log(response.data)
-                        this.$router.push({name:"IssuesPage"});
+                        
                     })
 
                     .catch(error =>{
                         console.log(error);
                     })
-                    
+                 
+                window.confirm('You have succesfully deleted the issue.');
+                //this reloads the page after the update
+                window.location.reload();
+                
+                this.$router.push({name:"IssuesPage"});
                 } else {
+                    
                     this.$router.push({name:"IssuesPage"});
                  }
-                
-
+                 
+                 window.location.reload();
             }
         },
 
@@ -110,6 +115,7 @@ export default {
                 this.$router.push({name:"IssueViewDetail"});
             }
         },
+     
         
     }
 }

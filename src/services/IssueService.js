@@ -3,27 +3,27 @@ import http from "../http-common.js";
 class IssueService {
 
     getIssues(){
-        return http.get(`/issues`);
+        return http.get(`/issuess`);
     }
 
     createIssue(data){
-        return http.post("/issues",data);
+        return http.post("/issuess",data);
     }
 
     createIssueAction(id,data){
-        return http.post(`/issues/${id}/action`,data)
+        return http.post(`/issuess/${id}/actions`,data)
     }
 
     getIssueActions(id){
-        return http.get(`/issue/${id}/action`)
+        return http.get(`/issues/${id}/actions`)
     }
 
     updateIssuesAndActions(data){
-        return http.put("/issue",data)
+        return http.put("/issues",data)
     }
 
     deleteIssue(id){
-        return http.delete(`/issue/${id}`)
+        return http.delete(`/issues/${id}`)
     }
 
 }
