@@ -70,7 +70,7 @@ export default{
         employeeName:"",
         checkedIndex:null,
         selectedIssue:{},
-        employeeTag:1,  //0= Auditee; 1=Auditor; 2=Admin
+        employeeTag:0,  //0= Auditee; 1=Auditor; 2=Admin
         employeeId:0,
         empDepartment:"",
         filteredEmp:[],
@@ -101,7 +101,7 @@ methods: {
     retrieveEmployee(){
         EmployeeDataService.get()
             .then(response =>{
-                this.employeeId =2;
+               // this.employeeId =2;
                 this.employeeList = response.data;
                 //this approach is similar to above to address the delay of response from the repository
                 localStorage.setItem("listEmployeePassed",JSON.stringify(this.employeeList));                                                       
@@ -112,11 +112,25 @@ methods: {
 
     },
 
+    retrieveEmployeeAuditor(){
+        EmployeeDataService.getAuditee()
+            .then(response =>{
+               // this.employeeId =2;
+                this.employeeList = response.data;
+                console.log(this.employeeList);
+                //this approach is similar to above to address the delay of response from the repository
+                localStorage.setItem("listEmployeePassed",JSON.stringify(this.employeeList));                                                       
+            })
+            .catch(error =>{
+                console.log(error);
+            })
+    },
+
     //the store list of employees in the local repository is unpacked and stored in a local variable to be used.
     unpackEmployee(){
        
             const employeeListObtained = localStorage.getItem('listEmployeePassed');
-            this.employeeId= 2;
+         //   this.employeeId= 2;
             if(employeeListObtained){
                 this.employeeListUnpacked = JSON.parse(employeeListObtained);
                 
@@ -128,19 +142,20 @@ methods: {
     //after the local storage is unpacked, the values are used for subsequent actions. for loop method is used for this approach
     //some flexibilty on use of functions as some don't work or unfamiliar
     filterEmployee(){
-        this.employeeId= 1;
+        this.employeeId= localStorage.getItem('eid');       
         let filteredEmp=[];
         let filteredEmployeeDepartment="";
         
         for(let i = 0; i<this.employeeListUnpacked.length;i++){
-            if(this.employeeListUnpacked[i].id==this.employeeId){
+            if(this.employeeListUnpacked[i].employee.id==this.employeeId){
                 filteredEmp = this.employeeListUnpacked[i];
-                filteredEmployeeDepartment = filteredEmp.department;
+                filteredEmployeeDepartment = filteredEmp.employee.department;
             }
         } 
         
         this.filteredEmpDep = filteredEmployeeDepartment;
-         
+        console.log(this.filteredEmpDep);
+               
     },
 
     //this is to unpack the local storage for subsequent use
@@ -167,6 +182,12 @@ methods: {
 
         this.issuesListAuditee = issueListAuditeeLocal;
 
+    },
+
+    getEmployeeTag(){
+        const employeeTagObtained = localStorage.getItem('role');
+        
+        this.employeeTag = employeeTagObtained;
     },
 
     //display functions to support the filter button.  any values from the selection at the issues list page will perfom filtering
@@ -225,8 +246,10 @@ watch:{
 
 mounted(){
     //these methods run when the page loads
+    this.getEmployeeTag();
     this.retrieveIssue();
-    this.retrieveEmployee();
+    this.retrieveEmployeeAuditor();
+   // this.retrieveEmployee();
     this.unpackEmployee();
     this.filterEmployee();
     this.unpackIssue();

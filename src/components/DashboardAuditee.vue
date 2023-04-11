@@ -113,7 +113,7 @@ import EmployeeDataService from '../services/EmployeeDataService'
           toIssue(event)
           {
             event.preventDefault();
-            this.$router.push({name:"IssuesPage"});
+            this.$router.push({name:"IssuePageAuditee"});
 
           },
 

@@ -56,7 +56,7 @@
         <br>
         <button id="backtolistbutton" @click="handlerBackToListButton">BACK TO LIST OF ISSUES</button>
         </div>
-            
+        
     </div>
 
 </template>
@@ -124,20 +124,25 @@ export default{
                 
             },
 
-            employeeTagSet(){
-               // const employeeTagLocal = 
-                this.employeeTag = 0;
+            // employeeTagSet(){
+            //    // const employeeTagLocal = 
+            //     this.employeeTag = 0;
 
-            }
+            // },
+            getEmployeeTag(){
+                const employeeTagObtained = localStorage.getItem('role');          
+                this.employeeTag = employeeTagObtained;
+            },
 
 
 },
 
     mounted(){
+        this.getEmployeeTag();
         this.getIssueDetail();
         this.getEmailAndPerson();
         this.retrieveActions();
-        this.employeeTagSet();
+        //this.employeeTagSet();
         
     },
     
