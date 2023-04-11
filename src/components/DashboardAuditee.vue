@@ -57,7 +57,8 @@
     </div>-->
   </template>
   <script>
-  import EmployeeDataService from '../services/EmployeeDataService'
+
+import EmployeeDataService from '../services/EmployeeDataService'
   import IssueService from '../services/IssueService'
   
   export default{
@@ -81,27 +82,29 @@
   
     methods :{
       retrieveEmployee(){
-          const eid = localStorage.getItem('eid');
-             EmployeeDataService.get()
-              .then(response =>{
-                  this.employee = response.data; //employee will save all the data 
-                  console.log(this.employee);
+          //const eid = localStorage.getItem('eid');
+          const eid = 21;
 
-       this.employee.forEach(item => {
-                  if(item.id === parseInt(eid))
-                  {
-                    console.log("departement " + item.department);
-                    this.eDepartment = item.department;
+              EmployeeDataService.getAuditee()
+              .then(response=> {
+                this.employee = response.data; //employee will save all the data 
+                  console.log(this.employee);
+                  this.employee.forEach(item => {     
+                    if(item.employee.id === parseInt(eid))
+                    {          
+                     console.log("id " + item.employee.id);
+                     this.eDepartment = item.employee.department;
+                    }
+         
                   
-                  }
-            });
+             });
 
 
 
               })
-  
-              .catch(error =>{
-                  console.log(error);
+
+              .catch(error=>{
+                console.log(error);
               })
           },
   
@@ -119,6 +122,8 @@
                   const date = new Date(issue.approvedDeadline * 1000);
                   issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
             });
+
+            
   
               })
               .catch(error => {
