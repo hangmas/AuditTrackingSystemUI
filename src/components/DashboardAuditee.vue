@@ -62,7 +62,7 @@
     
     export default{
     
-    name: 'dashboardAuditor',
+    name: 'dashboardAuditee',
     data()
     {
         return{

@@ -120,7 +120,14 @@ export default{
                 console.log(employee);
                 localStorage.setItem('eid',employee.id);
                 this.message = employee;
-                this.$router.push({ name: "dashboardAuditor"});
+                if (employee.role === 1){
+                    this.$router.push({ name: "dashboardAuditor"});
+                }
+                else {
+                    this.$router.push({ name: "dashboardAuditee"});
+
+                }
+                
             })
             .catch(error => {
                 this.employeeLoginRequest.studentId = "";

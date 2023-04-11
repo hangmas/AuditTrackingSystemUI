@@ -36,15 +36,25 @@ export default{
 
     },
     methods:{
-        signup(event){
+        signUp(event){
             event.preventDefault();
-            LoginService.login(this.employeeLoginRequest)
+            LoginService.user(this.employeeSignupRequest)
             .then(response => {
-                let employee = response.data;
-                console.log(employee);
-                localStorage.setItem('user-info',employee.data.id);
+                console.log("",response)
+                LoginService.setup(this.employeeSignupRequest,response.data.id)
+                .then(response2 => {
+                    let employee = response2.data;
+                    console.log("Response to",employee);
+                localStorage.setItem('user-info',employee.id);
                 this.message = employee;
                 this.$router.push({ name: "dashboardAuditor"});
+
+                })
+                .catch(error=>{
+                    console.log(error.response.data);
+
+                })
+                
             })
             .catch(error => {
                 this.employeeSignupRequest.studentId = "";

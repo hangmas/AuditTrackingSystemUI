@@ -3,6 +3,7 @@ import Login from "../components/MainLogin.vue";
 import employeeProfile from "../components/EmployeeProfile.vue";
 import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
+import dashboardAuditee from "../components/DashboardAuditee.vue"
 import IssueCreate from "../components/IssueCreate.vue"
 import IssueEdit from "../components/IssueEdit.vue"
 import SignUp from "../components/SignUp.vue"
@@ -51,6 +52,11 @@ component : dashboardAuditor
     path: "/editIssues",
     name: "IssueEdit",
     component: IssueEdit
+},
+{
+    path: "/dashboard",
+    name: "dashboardAuditee",
+    component: dashboardAuditee
 },
 
 
