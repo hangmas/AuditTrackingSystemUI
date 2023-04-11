@@ -3,15 +3,15 @@ import http from "../http-common.js";
 class IssueService {
 
     getIssues(){
-        return http.get(`/issue`);
+        return http.get(`/issues`);
     }
 
     createIssue(data){
-        return http.post("/issue",data);
+        return http.post("/issues",data);
     }
 
     createIssueAction(id,data){
-        return http.post(`/issue/${id}/action`,data)
+        return http.post(`/issues/${id}/action`,data)
     }
 
     getIssueActions(id){

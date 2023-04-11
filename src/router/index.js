@@ -8,64 +8,72 @@ import IssueEdit from "../components/IssueEdit.vue"
 import IssueViewDetail from "../components/IssueViewDetail.vue"
 import IssuePageAuditee from "../components/IssuePageAuditee.vue"
 import IssueEditAuditee from "../components/IssueEditAuditee.vue"
+import IssuesReport from "../components/IssuesReports.vue"
 
-const routes =[
-{
 
-    path :"/",
-    alias: "/login", //its a nickname for the path
-    name: "Login",
-    component: Login
-},
-{
-path :"/profile",
-name :"employeeProfile",
-component : employeeProfile
+const routes = [
+    {
 
-},
-{
-path : "/dashboard",
-name : "dashboardAuditor",
-component : dashboardAuditor
-},
+        path: "/",
+        alias: "/login", //its a nickname for the path
+        name: "login",
+        component: Login
+    },
+    {
+        path: "/profile",
+        name: "employeeProfile",
+        component: employeeProfile
 
-{
-    path: "/issues",
-    name: "IssuesPage",
-    component: IssuesPage
-},
+    },
+    {
+        path: "/dashboard",
+        name: "dashboardAuditor",
+        component: dashboardAuditor
+    },
 
-{
-    path: "/createissues",
-    name: "IssueCreate",
-    component: IssueCreate
-},
+    {
+        path: "/issues",
+        name: "IssuesPage",
+        component: IssuesPage
+    },
 
-{
-    path: "/editIssues",
-    name: "IssueEdit",
-    component: IssueEdit
-},
+    {
+        path: "/createissues",
+        name: "IssueCreate",
+        component: IssueCreate
+    },
 
-{
-    path: "/viewIssues",
-    name: "IssueViewDetail",
-    component: IssueViewDetail
+    {
+        path: "/editIssues",
+        name: "IssueEdit",
+        component: IssueEdit
+    },
 
-},
-{
-    path: "/issuepageauditee",
-    name: "IssuePageAuditee",
-    component: IssuePageAuditee
+    {
+        path: "/viewIssues",
+        name: "IssueViewDetail",
+        component: IssueViewDetail
 
-},
+    },
+    {
+        path: "/issuepageauditee",
+        name: "IssuePageAuditee",
+        component: IssuePageAuditee
 
-{
-    path: "/issueeditauditee",
-    name: "IssueEditAuditee",
-    component: IssueEditAuditee
+    },
 
-},
+    {
+        path: "/issueeditauditee",
+        name: "IssueEditAuditee",
+        component: IssueEditAuditee
+
+    },
+
+    {
+        path: "/reports",
+        name: "IssuesReports",
+        component: IssuesReport
+    }
 
 
 ];//this is an array containing the path which is the url
