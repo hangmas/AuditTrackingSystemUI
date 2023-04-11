@@ -2,75 +2,84 @@
     <div>
         <h4>Login</h4>
         <form>
-          <div>
-                <label for ="employeeID">Employee Email</label>
-                <input type="text" name="email" v-model="LoginForm.email"/> 
-            </div>
 
             <div>
-                <label for ="password">Password: </label>
-                <input type="password" name="password" v-model="LoginForm.password"/>
-            </div> 
-        </form>
-        <div>
+                <label for=" email">Email:</label>
+                <input type="text" id="email" v-model="employeeLoginRequest.email"/>
+
+            </div>
+            <div>
+                <label for=" password">Password:</label>
+                <input type="password" id="password" v-model="employeeLoginRequest.password"/>
+            </div>
+            <div>
                 <button type="submit" @click="login">Login</button>
             </div>
-       
+        </form>
+        <p>
+                    <router-link to="/signup"> Login</router-link>
+                </p>
+
         <p>{{ message }}</p>
     </div>
+
+
+
 </template>
 
 <script>
-import LoginService from '@/services/LoginService';
+import LoginService from "../services/LoginService";
 
 
+export default{
+    name : "employeeLogin",
+    data(){
+        return{
+            employeeLoginRequest: {email:"", password:""},
 
-export default {
-    name: "employeeLogin",
-    data(){  //it is a function, it will return a value
-        return {
-            LoginForm : {email: "", password: ""},
             message: ""
         }
-    },
 
+    },
     methods:{
         login(event){
             event.preventDefault();
 
-          LoginService.login(this.LoginForm) // all the data from login will be send to LoginService.js, it has an api in that file
+            LoginService.login(this.employeeLoginRequest)
             .then(response => {
                 let employee = response.data;
                 console.log(employee);
-                console.log(employee.employee.id);
-                console.log(employee.role);
-                localStorage.setItem('eid',employee.employee.id);
-                localStorage.setItem('role',employee.role);
-                if(employee.role === 2 || employee.role ===1)
-                {
-                this.$router.push({name:"dashboardAuditor"});
+                localStorage.setItem('eid',employee.id);
+                this.message = employee;
+                if (employee.role === 1){
+                    this.$router.push({ name: "dashboardAuditor"});
                 }
-                else
-                {
-                this.$router.push({name:"dashboardAuditee"});
+                else {
+                    this.$router.push({ name: "dashboardAuditee"});
+
                 }
+                
+            })
+            .catch(error => {
+                this.employeeLoginRequest.studentId = "";
+                this.employeeLoginRequest.password = "";
+                this.message = error.response.data.message;
+                console.log(error.response.data);
+            })
 
-            }
-            )
 
-             .catch(error =>{
-                 console.log(error);
-             });
         }
+
     },
 
-    mounted(){
-        this.message = "";
+mounted(){
 
-    }
+    this.message = "";
 
 }
-</script>
+}
 
+</script>
 <style>
+
 </style>

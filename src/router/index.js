@@ -10,6 +10,7 @@ import IssueViewDetail from "../components/IssueViewDetail.vue"
 import IssuePageAuditee from "../components/IssuePageAuditee.vue"
 import IssueEditAuditee from "../components/IssueEditAuditee.vue"
 
+
 const routes =[
 {
 
@@ -17,6 +18,13 @@ const routes =[
     alias: "/login", //its a nickname for the path
     name: "Login",
     component: Login
+},
+{
+    path :"/signup",
+    name :"SignUp",
+    component : SignUp
+
+
 },
 {
 path :"/profile",
@@ -53,6 +61,11 @@ component : dashboardAuditor
     name: "IssueEdit",
     component: IssueEdit
 },
+{
+    path: "/dashboard",
+    name: "dashboardAuditee",
+    component: dashboardAuditee
+},
 
 {
     path: "/viewIssues",
@@ -82,6 +95,7 @@ const router = createRouter({
     history: createWebHistory(), // when user click back button, it will resolve it for us
     routes
 })
+
 
 //need to export so other javascript can use it
 export default router;
