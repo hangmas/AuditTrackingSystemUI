@@ -5,6 +5,8 @@ import IssuesPage from "../components/IssuesPage.vue";
 import dashboardAuditor from "../components/DashboardAuditor.vue"
 import IssueCreate from "../components/IssueCreate.vue"
 import IssueEdit from "../components/IssueEdit.vue"
+import SignUp from "../components/SignUp.vue"
+
 
 const routes =[
 {
@@ -13,6 +15,13 @@ const routes =[
     alias: "/login", //its a nickname for the path
     name: "Login",
     component: Login
+},
+{
+    path :"/signup",
+    name :"SignUp",
+    component : SignUp
+
+
 },
 {
 path :"/profile",
@@ -52,6 +61,7 @@ const router = createRouter({
     history: createWebHistory(), // when user click back button, it will resolve it for us
     routes
 })
+
 
 //need to export so other javascript can use it
 export default router;
