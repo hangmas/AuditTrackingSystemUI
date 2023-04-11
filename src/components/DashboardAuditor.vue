@@ -1,5 +1,19 @@
 <template>
   <div>
+    <header>
+      <h1>AUDIT ISSUES MONITORING SYSTEM</h1>
+    </header>
+    <nav>
+      <ul class="nav-links">
+    <li><Router-link to="" @click="toDashboard">Dashboard</Router-link></li>
+    <li><Router-link to="" @click="toIssue">Issues</Router-link></li>
+    <li><Router-link to="" @click="toReport">Report</Router-link></li>
+    <li><Router-link to="" @click="toSettings">Settings</Router-link></li>
+    <li><Router-link to="" @click="toLogout">Logout</Router-link></li>
+  </ul>
+  </nav>
+  </div>
+  <div>
     <h1>Auditor Dashboard</h1>
       <h2>Outstanding Issues</h2>
       <div>
@@ -68,17 +82,6 @@
   </table>
   </div>
   
-  
-  <!--
-  <div>
-    <p v-for="(item, index) in filteredEmp" :key="index" :value="firstName">{{ item.firstName }}</p>
-  </div>-->
-  <!--
-  <div>
-    <ul>
-      <li v-for="(employee, index) in employee" :key="index">{{ employee.firstName }}</li>
-      </ul>
-    </div>-->
   </template>
   <script>
   import EmployeeDataService from '../services/EmployeeDataService'
@@ -117,6 +120,45 @@
                   console.log(error);
               })
           },
+
+          toIssue(event)
+          {
+            event.preventDefault();
+            this.$router.push({name:"IssuesPage"});
+
+          },
+
+           toDashboard(event)
+          {
+            event.preventDefault();
+            localStorage.setItem('eid',this.eid);
+            this.$router.push({name:"dashboardAuditor"});
+    
+
+
+          },
+
+          toReport(event)
+          {
+            event.preventDefault();
+          //  this.$router.push({name:"dashboardAuditor"});
+
+          },
+
+          toSettings(event)
+          {
+            event.preventDefault();
+         //   this.$router.push({name:"dashboardAuditor"});
+
+          },
+
+          toLogout(event)
+          {
+            event.preventDefault();
+            localStorage.removeItem('eid')  //remove the key from the local storage
+            this.$router.push({name:"Login"});
+
+          },
   
           retrieveIssue(){
           IssueService.getIssues()
@@ -134,12 +176,6 @@
                   issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
             });
   
-            // this.issuesList.forEach(issue => {
-            //   if(issue.riskRating === 'Low' && issue.status ==='Outstanding') this.lRisk ++;
-            //   if(issue.riskRating === 'Medium' && issue.status ==='Outstanding') this.mRisk ++;
-            //   if(issue.riskRating === 'High' && issue.status ==='Outstanding') this.hRisk ++;
-            //   if(issue.status === 'Outstanding') this.tRisk++;
-            // });
   
           
               })
@@ -253,7 +289,43 @@
           
       }
   
-  
+      nav {
+  background-color: #333;
+}
+.nav-links {
+  display: flex;
+  justify-content:left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+.nav-links a {
+  color: #fff;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  background-color: #555;
+}
+
+header {
+  background-color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  color: #fff;
+  font-size: 36px;
+  margin: 0;
+}
   
   
   </style>

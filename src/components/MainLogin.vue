@@ -45,6 +45,7 @@ export default {
                 console.log(employee.employee.id);
                 console.log(employee.role);
                 localStorage.setItem('eid',employee.employee.id);
+                localStorage.setItem('role',employee.role);
                 if(employee.role === 2 || employee.role ===1)
                 {
                 this.$router.push({name:"dashboardAuditor"});
