@@ -6,7 +6,9 @@ import dashboardAuditor from "../components/DashboardAuditor.vue"
 import dashboardAuditee from "../components/DashboardAuditee.vue"
 import IssueCreate from "../components/IssueCreate.vue"
 import IssueEdit from "../components/IssueEdit.vue"
-import SignUp from "../components/SignUp.vue"
+import IssueViewDetail from "../components/IssueViewDetail.vue"
+import IssuePageAuditee from "../components/IssuePageAuditee.vue"
+import IssueEditAuditee from "../components/IssueEditAuditee.vue"
 
 
 const routes =[
@@ -31,9 +33,15 @@ component : employeeProfile
 
 },
 {
-path : "/dashboard",
+path : "/dashboardAuditor",
 name : "dashboardAuditor",
 component : dashboardAuditor
+},
+
+{
+    path : "/dashboardAuditee",
+    name : "dashboardAuditee",
+    component : dashboardAuditee
 },
 
 {
@@ -57,6 +65,26 @@ component : dashboardAuditor
     path: "/dashboard",
     name: "dashboardAuditee",
     component: dashboardAuditee
+},
+
+{
+    path: "/viewIssues",
+    name: "IssueViewDetail",
+    component: IssueViewDetail
+
+},
+{
+    path: "/issuepageauditee",
+    name: "IssuePageAuditee",
+    component: IssuePageAuditee
+
+},
+
+{
+    path: "/issueeditauditee",
+    name: "IssueEditAuditee",
+    component: IssueEditAuditee
+
 },
 
 

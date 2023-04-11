@@ -2,9 +2,11 @@
     <div>
         <h4>Login</h4>
         <form>
+
             <div>
                 <label for=" email">Email:</label>
                 <input type="text" id="email" v-model="employeeLoginRequest.email"/>
+
             </div>
             <div>
                 <label for=" password">Password:</label>
@@ -17,8 +19,10 @@
         <p>
                     <router-link to="/signup"> Login</router-link>
                 </p>
+
         <p>{{ message }}</p>
     </div>
+
 
 
 </template>
@@ -26,11 +30,13 @@
 <script>
 import LoginService from "../services/LoginService";
 
+
 export default{
     name : "employeeLogin",
     data(){
         return{
             employeeLoginRequest: {email:"", password:""},
+
             message: ""
         }
 
@@ -38,6 +44,7 @@ export default{
     methods:{
         login(event){
             event.preventDefault();
+
             LoginService.login(this.employeeLoginRequest)
             .then(response => {
                 let employee = response.data;
@@ -59,6 +66,8 @@ export default{
                 this.message = error.response.data.message;
                 console.log(error.response.data);
             })
+
+
         }
 
     },

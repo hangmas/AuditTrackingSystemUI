@@ -6,6 +6,11 @@ class EmployeeDataService{
       //  return http.get(`/employees/${eid}`);
       return http.get(`/employees`);
     }
+
+    getAuditee()
+    {
+    return http.get(`/auditors`);
+    }
 }
 
 export default new EmployeeDataService();

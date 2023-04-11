@@ -73,128 +73,217 @@
           employee : [],
           issuesList:[],
 
-          date: '', // variable to hold the date value,
+  </template>
+  <script>
 
-        }
-    
-    },
-    
-      methods :{
-        retrieveEmployee(){
-            const eid = localStorage.getItem('eid');
-               EmployeeDataService.get()
-                .then(response =>{
-                    this.employee = response.data; //employee will save all the data 
-                    console.log(this.employee);
-
-         this.employee.forEach(item => {
-                    if(item.id === parseInt(eid))
-                    {
-                      console.log("departement " + item.department);
-                      this.eDepartment = item.department;
-                    
-                    }
-              });
-
-
-
-                })
-    
-                .catch(error =>{
-                    console.log(error);
-                })
-            },
-    
-            retrieveIssue(){
-            IssueService.getIssues()
-                .then(response =>{
-                    this.issuesList = response.data;
-                    console.log(this.issuesList);                   
-                    this.issuesList.forEach(issue => {
-                    const date = new Date(issue.issueDate * 1000);
-                    issue.issueDate = date.toLocaleDateString(); // update issueDate to the formatted date string
-              });
-    
-              this.issuesList.forEach(issue => {
-                    const date = new Date(issue.approvedDeadline * 1000);
-                    issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
-              });
-    
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    
-    
-    
-      },
-    
-      computed: {
-        departments() {
-          // get a list of all departments from the issues array
-          const departments = new Set();
-          for (const item of this.issuesList) {
-          departments.add(item.departmentResponsible);
-          }
-          return Array.from(departments);
-        },
-        // filteredIssues() {
-        //   if (this.selectedDepartment) {
-        //     return this.issuesList.filter((issue) => issue.departmentResponsible === this.selectedDepartment);
-        //   } else {
-        //     return this.issuesList;
-        //   }
-        // },
-    
-        filteredIssues() { //Filter the issue list based on the departement and the status of the issue
-            return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Outstanding')
-    },
-    
-    filteredIssues2() {
-      return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Closed')
-
-    },
-    
-        filteredEmp()
-        {
-    
-          return this.employee.filter((employee) => employee.firstName === "Shilpa")
-        }
+import EmployeeDataService from '../services/EmployeeDataService'
+  import IssueService from '../services/IssueService'
+  
+  export default{
+  
+  name: 'dashboardAuditee',
+  data()
+  {
+      return{
         
-      },
-    
-      mounted()
-      {
-        this.retrieveEmployee();
-        this.retrieveIssue();
-    
-    
+        eDepartment :"",
+        selectedDepartment: "",
+        selectedDepartment2: "",
+        employee : [],
+        issuesList:[],
+        eid : "",
+        date: '', // variable to hold the date value,
+
       }
-    };
-    
-    </script>
-    
-    <style scoped>
-        table.issuelisttable {
-            border:10px;
+  
+  },
+  
+    methods :{
+      retrieveEmployee(){
+          this.eid = localStorage.getItem('eid');
+
+
+              EmployeeDataService.getAuditee()
+              .then(response=> {
+                this.employee = response.data; //employee will save all the data 
+                  console.log(this.employee);
+                  this.employee.forEach(item => {     
+                    if(item.employee.id === parseInt(this.eid))
+                    {          
+                     this.eDepartment = item.employee.department;
+                    }
+         
+                  
+             });
+
+
+
+              })
+
+              .catch(error=>{
+                console.log(error);
+              })
+          },
+  
+          toIssue(event)
+          {
+            event.preventDefault();
+            this.$router.push({name:"IssuePageAuditee"});
+
+          },
+
+           toDashboard(event)
+          {
+            event.preventDefault();
+            localStorage.setItem('eid',this.eid);
+            this.$router.push({name:"dashboardAuditee"});
+
+          },
+
+          toReport(event)
+          {
+            event.preventDefault();
+          //  this.$router.push({name:"dashboardAuditor"});
+
+          },
+
+          toSettings(event)
+          {
+            event.preventDefault();
+         //   this.$router.push({name:"dashboardAuditor"});
+
+          },
+
+          toLogout(event)
+          {
+            event.preventDefault();
+            localStorage.removeItem('eid')  //remove the key from the local storage
+            this.$router.push({name:"Login"});
+
+          },
+
+
+
+
+
+
+          retrieveIssue(){
+          IssueService.getIssues()
+              .then(response =>{
+                  this.issuesList = response.data;
+                  console.log(this.issuesList);                   
+                  this.issuesList.forEach(issue => {
+                  const date = new Date(issue.issueDate * 1000);
+                  issue.issueDate = date.toLocaleDateString(); // update issueDate to the formatted date string
+            });
+  
+            this.issuesList.forEach(issue => {
+                  const date = new Date(issue.approvedDeadline * 1000);
+                  issue.approvedDeadline = date.toLocaleDateString(); // update approvedDateline to the formatted date string
+            });
+
             
-            
+  
+              })
+              .catch(error => {
+                  console.log(error);
+              })
+      }
+  
+  
+  
+    },
+  
+    computed: {
+      departments() {
+        // get a list of all departments from the issues array
+        const departments = new Set();
+        for (const item of this.issuesList) {
+        departments.add(item.departmentResponsible);
         }
-        table.issuelisttable th {
-            border: 1px;
-            border-style: solid;
-            border-color: gray;
-            background-color:lightcyan;
-        }
-    
-        table.issuelisttable td {
-            border: 1px;
-            border-style: solid;
-            border-color: gray;
-            
-        }
-    
-    
-    
-    </style>
+        return Array.from(departments);
+      },
+  
+      filteredIssues() { //Filter the issue list based on the departement and the status of the issue
+          return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Outstanding')
+  },
+  
+  filteredIssues2() {
+    return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Closed')
+
+  }
+  
+  
+    },
+  
+    mounted()
+    {
+      this.retrieveEmployee();
+      this.retrieveIssue();
+  
+  
+    }
+  };
+  
+  </script>
+  
+  <style scoped>
+      table.issuelisttable {
+          border:10px;
+          
+          
+      }
+      table.issuelisttable th {
+          border: 1px;
+          border-style: solid;
+          border-color: gray;
+          background-color:lightcyan;
+      }
+  
+      table.issuelisttable td {
+          border: 1px;
+          border-style: solid;
+          border-color: gray;
+          
+      }
+  
+  
+      nav {
+  background-color: #333;
+}
+
+.nav-links {
+  display: flex;
+  justify-content:left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+.nav-links a {
+  color: #fff;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  background-color: #555;
+}
+
+header {
+  background-color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  color: #fff;
+  font-size: 36px;
+  margin: 0;
+}
+  </style>
