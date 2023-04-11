@@ -82,8 +82,8 @@ import EmployeeDataService from '../services/EmployeeDataService'
   
     methods :{
       retrieveEmployee(){
-          //const eid = localStorage.getItem('eid');
-          const eid = 21;
+          const eid = localStorage.getItem('eid');
+          //const eid = 21;
 
               EmployeeDataService.getAuditee()
               .then(response=> {
@@ -92,7 +92,6 @@ import EmployeeDataService from '../services/EmployeeDataService'
                   this.employee.forEach(item => {     
                     if(item.employee.id === parseInt(eid))
                     {          
-                     console.log("id " + item.employee.id);
                      this.eDepartment = item.employee.department;
                     }
          
@@ -144,13 +143,6 @@ import EmployeeDataService from '../services/EmployeeDataService'
         }
         return Array.from(departments);
       },
-      // filteredIssues() {
-      //   if (this.selectedDepartment) {
-      //     return this.issuesList.filter((issue) => issue.departmentResponsible === this.selectedDepartment);
-      //   } else {
-      //     return this.issuesList;
-      //   }
-      // },
   
       filteredIssues() { //Filter the issue list based on the departement and the status of the issue
           return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Outstanding')
