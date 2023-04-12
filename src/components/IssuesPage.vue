@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-button {
+/* button {
     margin-left: 8px;
 }
 
@@ -141,6 +141,6 @@ button {
    flex-wrap: wrap;
    justify-content: flex-end;
     
-}
+} */
 
 </style>

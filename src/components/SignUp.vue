@@ -1,11 +1,9 @@
 <template>
     
-    <div>
-        <div>
-            <br/>
+    <div class="login-form">
+        <div class="header-with-logo">
             <img class="logo" src="../assets/audit.jpg"/>
-            <h3>Signup</h3><br />
-            <h3/>
+            <h2>Signup</h2>
         </div>
         <form>
             <div class="formm">
@@ -25,6 +23,7 @@
 </template>
 <script>
 import LoginService from "../services/LoginService";
+import "../App.css"
 export default{
     
     name : "employeeLogin",
@@ -70,38 +69,5 @@ export default{
 
 </script>
 <style>
-.logo{
-    margin-left: auto;
-    margin-right: auto;
-    width: 160px;
-    height: 160px;
-    
-    
-    
-}
-
-.formm input{
-    width:300px;
-    height:40px;
-    padding-left: 20px;
-    display: block;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid skyblue;
-
-
-}
-.formm button{
-    width: 320px;
-    height: 40px;
-    border: 1px solid lightblue;
-    color: #fff;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: skyblue;
-
-}
 
 </style>

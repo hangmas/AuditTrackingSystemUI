@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="issue-details-container">
         <div class="header">
             <h3>Audit Issue Details</h3>
         </div>
@@ -150,22 +150,6 @@ export default{
 
 </script>
 <style scoped>
-label, span {
-    line-height: 25px;
-}
 
-table.issueactiontable th {
-        border: 1px;
-        border-style: solid;
-        border-color: gray;
-        background-color:lightcyan;
-    }
-
-    table.issueactiontable td {
-        border: 1px;
-        border-style: solid;
-        border-color: gray;
-        
-    }
 
 </style>

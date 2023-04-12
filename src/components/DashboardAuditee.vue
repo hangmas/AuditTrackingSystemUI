@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <header>
       <h1>AUDIT ISSUES MONITORING SYSTEM</h1>
     </header>
@@ -12,9 +12,9 @@
     <li><Router-link to="" @click="toLogout">Logout</Router-link></li>
   </ul>
   </nav>
-  </div>
+  </div> -->
   <div>
-      <h1>Auditee Dashboard</h1>
+      <!-- <h1>Auditee Dashboard</h1> -->
       <h2>Outstanding Issues</h2>
       <table class="issuelisttable">
       <tr>
@@ -213,7 +213,7 @@ import EmployeeDataService from '../services/EmployeeDataService'
   </script>
   
   <style scoped>
-      table.issuelisttable {
+      /* table.issuelisttable {
           border:10px;
           
           
@@ -270,5 +270,5 @@ header h1 {
   color: #fff;
   font-size: 36px;
   margin: 0;
-}
+} */
   </style>
