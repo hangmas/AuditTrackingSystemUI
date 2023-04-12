@@ -9,18 +9,20 @@ import IssueEdit from "../components/IssueEdit.vue"
 import IssueViewDetail from "../components/IssueViewDetail.vue"
 import IssuePageAuditee from "../components/IssuePageAuditee.vue"
 import IssueEditAuditee from "../components/IssueEditAuditee.vue"
+import IssuesReport from "../components/IssuesReports.vue"
+
 import SignUp from "../components/SignUp.vue"
 
 
-const routes =[
-{
+const routes = [
+    {
 
-    path :"/",
-    alias: "/login", //its a nickname for the path
-    name: "Login",
-    component: Login
-},
-{
+        path: "/",
+        alias: "/login", //its a nickname for the path
+        name: "login",
+        component: Login
+    },
+    {
     path :"/signup",
     name :"SignUp",
     component : SignUp
@@ -28,65 +30,76 @@ const routes =[
 
 },
 {
-path :"/profile",
-name :"employeeProfile",
-component : employeeProfile
+        path: "/profile",
+        name: "employeeProfile",
+        component: employeeProfile
 
-},
-{
-path : "/dashboardAuditor",
-name : "dashboardAuditor",
-component : dashboardAuditor
-},
+    },
+    {
+        path: "/dashboard",
+        name: "dashboardAuditor",
+        component: dashboardAuditor
+    },
+    {
+        path: "/dashboardAuditor",
+        name: "dashboardAuditor",
+        component: dashboardAuditor
+    },
 
-{
-    path : "/dashboardAuditee",
-    name : "dashboardAuditee",
-    component : dashboardAuditee
-},
+    {
+        path: "/dashboardAuditee",
+        name: "dashboardAuditee",
+        component: dashboardAuditee
+    },
 
-{
-    path: "/issues",
-    name: "IssuesPage",
-    component: IssuesPage
-},
+    {
+        path: "/issues",
+        name: "IssuesPage",
+        component: IssuesPage
+    },
 
-{
-    path: "/createissues",
-    name: "IssueCreate",
-    component: IssueCreate
-},
+    {
+        path: "/createissues",
+        name: "IssueCreate",
+        component: IssueCreate
+    },
 
-{
-    path: "/editIssues",
-    name: "IssueEdit",
-    component: IssueEdit
-},
+    {
+        path: "/editIssues",
+        name: "IssueEdit",
+        component: IssueEdit
+    },
 {
     path: "/dashboard",
     name: "dashboardAuditee",
     component: dashboardAuditee
 },
 
-{
-    path: "/viewIssues",
-    name: "IssueViewDetail",
-    component: IssueViewDetail
+    {
+        path: "/viewIssues",
+        name: "IssueViewDetail",
+        component: IssueViewDetail
 
-},
-{
-    path: "/issuepageauditee",
-    name: "IssuePageAuditee",
-    component: IssuePageAuditee
+    },
+    {
+        path: "/issuepageauditee",
+        name: "IssuePageAuditee",
+        component: IssuePageAuditee
 
-},
+    },
 
-{
-    path: "/issueeditauditee",
-    name: "IssueEditAuditee",
-    component: IssueEditAuditee
+    {
+        path: "/issueeditauditee",
+        name: "IssueEditAuditee",
+        component: IssueEditAuditee
 
-},
+    },
+
+    {
+        path: "/reports",
+        name: "IssuesReports",
+        component: IssuesReport
+    }
 
 
 ];//this is an array containing the path which is the url

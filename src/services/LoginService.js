@@ -1,9 +1,8 @@
-import http from "../http-common";
+import http from "../http-common.js";
 
 class LoginService{
-    login(data){
+    employeeLogin(data){
         return http.post("/login",data); // it will return the result from login api
-
     }
     user(data){
         console.log("data" ,data)

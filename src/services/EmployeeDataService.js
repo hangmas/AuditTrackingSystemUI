@@ -7,6 +7,12 @@ class EmployeeDataService{
       return http.get(`/employees`);
     }
 
+    getAllEmployees(){
+      return http.get('/employees',{params: {
+        nonAuditEmployee: false
+      }})
+    }
+
     getAuditee()
     {
     return http.get(`/auditors`);
