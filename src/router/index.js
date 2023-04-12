@@ -11,6 +11,8 @@ import IssuePageAuditee from "../components/IssuePageAuditee.vue"
 import IssueEditAuditee from "../components/IssueEditAuditee.vue"
 import IssuesReport from "../components/IssuesReports.vue"
 
+import SignUp from "../components/SignUp.vue"
+
 
 const routes = [
     {
@@ -21,6 +23,13 @@ const routes = [
         component: Login
     },
     {
+    path :"/signup",
+    name :"SignUp",
+    component : SignUp
+
+
+},
+{
         path: "/profile",
         name: "employeeProfile",
         component: employeeProfile
@@ -60,6 +69,11 @@ const routes = [
         name: "IssueEdit",
         component: IssueEdit
     },
+{
+    path: "/dashboard",
+    name: "dashboardAuditee",
+    component: dashboardAuditee
+},
 
     {
         path: "/viewIssues",
@@ -95,6 +109,7 @@ const router = createRouter({
     history: createWebHistory(), // when user click back button, it will resolve it for us
     routes
 })
+
 
 //need to export so other javascript can use it
 export default router;

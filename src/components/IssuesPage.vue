@@ -22,6 +22,9 @@
         <IssueList :getSelectedIssue="getSelectedIssue"
                     :selectedFiltering="filterLabel"/>
     </div>
+    <br>
+    <br>
+    <button @click="backToDashboardHandler">Back to Dashboard</button>
 </template>
 
 <script>
@@ -115,6 +118,11 @@ export default {
                 this.$router.push({name:"IssueViewDetail"});
             }
         },
+
+        backToDashboardHandler(event){
+            event.preventDefault();
+            this.$router.push({name:"dashboardAuditor"});
+        }
      
         
     }

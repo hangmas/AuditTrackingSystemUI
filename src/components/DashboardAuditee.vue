@@ -1,5 +1,19 @@
 <template>
   <div>
+    <header>
+      <h1>AUDIT ISSUES MONITORING SYSTEM</h1>
+    </header>
+    <nav>
+      <ul class="nav-links">
+    <li><Router-link to="" @click="toDashboard">Dashboard</Router-link></li>
+    <li><Router-link to="" @click="toIssue">Issues</Router-link></li>
+    <li><Router-link to="" @click="toReport">Report</Router-link></li>
+    <li><Router-link to="" @click="toSettings">Settings</Router-link></li>
+    <li><Router-link to="" @click="toLogout">Logout</Router-link></li>
+  </ul>
+  </nav>
+  </div>
+  <div>
       <h1>Auditee Dashboard</h1>
       <h2>Outstanding Issues</h2>
       <table class="issuelisttable">
@@ -44,17 +58,6 @@
   </table>
   </div>
 
-  
-  <!--
-  <div>
-    <p v-for="(item, index) in filteredEmp" :key="index" :value="firstName">{{ item.firstName }}</p>
-  </div>-->
-  <!--
-  <div>
-    <ul>
-      <li v-for="(employee, index) in employee" :key="index">{{ employee.firstName }}</li>
-      </ul>
-    </div>-->
   </template>
   <script>
 
@@ -73,7 +76,7 @@ import EmployeeDataService from '../services/EmployeeDataService'
         selectedDepartment2: "",
         employee : [],
         issuesList:[],
-
+        eid : "",
         date: '', // variable to hold the date value,
 
       }
@@ -82,17 +85,17 @@ import EmployeeDataService from '../services/EmployeeDataService'
   
     methods :{
       retrieveEmployee(){
-          //const eid = localStorage.getItem('eid');
-          const eid = 21;
+          this.eid = localStorage.getItem('eid');
+
 
               EmployeeDataService.getAuditee()
               .then(response=> {
                 this.employee = response.data; //employee will save all the data 
                   console.log(this.employee);
+                  console.log(this.eid);
                   this.employee.forEach(item => {     
-                    if(item.employee.id === parseInt(eid))
+                    if(item.employee.id === parseInt(this.eid))
                     {          
-                     console.log("id " + item.employee.id);
                      this.eDepartment = item.employee.department;
                     }
          
@@ -108,11 +111,52 @@ import EmployeeDataService from '../services/EmployeeDataService'
               })
           },
   
+          toIssue(event)
+          {
+            event.preventDefault();
+            this.$router.push({name:"IssuesPage"});
+
+          },
+
+           toDashboard(event)
+          {
+            event.preventDefault();
+            localStorage.setItem('eid',this.eid);
+            this.$router.push({name:"dashboardAuditee"});
+
+          },
+
+          toReport(event)
+          {
+            event.preventDefault();
+          //  this.$router.push({name:"dashboardAuditor"});
+
+          },
+
+          toSettings(event)
+          {
+            event.preventDefault();
+         //   this.$router.push({name:"dashboardAuditor"});
+
+          },
+
+          toLogout(event)
+          {
+            event.preventDefault();
+            localStorage.removeItem('eid')  //remove the key from the local storage
+            this.$router.push({name:"Login"});
+
+          },
+
+
+
+
+
+
           retrieveIssue(){
           IssueService.getIssues()
               .then(response =>{
-                  this.issuesList = response.data;
-                  console.log(this.issuesList);                   
+                  this.issuesList = response.data;                  
                   this.issuesList.forEach(issue => {
                   const date = new Date(issue.issueDate * 1000);
                   issue.issueDate = date.toLocaleDateString(); // update issueDate to the formatted date string
@@ -144,13 +188,6 @@ import EmployeeDataService from '../services/EmployeeDataService'
         }
         return Array.from(departments);
       },
-      // filteredIssues() {
-      //   if (this.selectedDepartment) {
-      //     return this.issuesList.filter((issue) => issue.departmentResponsible === this.selectedDepartment);
-      //   } else {
-      //     return this.issuesList;
-      //   }
-      // },
   
       filteredIssues() { //Filter the issue list based on the departement and the status of the issue
           return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Outstanding')
@@ -159,14 +196,9 @@ import EmployeeDataService from '../services/EmployeeDataService'
   filteredIssues2() {
     return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Closed')
 
-  },
+  }
   
-      filteredEmp()
-      {
   
-        return this.employee.filter((employee) => employee.firstName === "Shilpa")
-      }
-      
     },
   
     mounted()
@@ -201,5 +233,42 @@ import EmployeeDataService from '../services/EmployeeDataService'
       }
   
   
-  
+      nav {
+  background-color: #333;
+}
+
+.nav-links {
+  display: flex;
+  justify-content:left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+.nav-links a {
+  color: #fff;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  background-color: #555;
+}
+
+header {
+  background-color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  color: #fff;
+  font-size: 36px;
+  margin: 0;
+}
   </style>

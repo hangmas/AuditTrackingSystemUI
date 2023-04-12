@@ -54,7 +54,7 @@
                 <h3>Updates Of Issue</h3>
                 <label class="label" for="actionsTaken">New Action Taken: </label>
                 <br>
-                <textarea class="textarea"  type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="" rows="5" cols="50" v-model="newAction"></textarea>
+                <textarea class="textarea"  type="inputtext" name="deptresponsibletext" id="deptresponsibleid" placeholder="If this area is left blank, succeeding field values will not cause any update." rows="5" cols="50" v-model="newAction"></textarea>
                 <br> 
                 <br>       
                 <label class="label" for="personresponsible">New Timeline: </label>
@@ -251,8 +251,12 @@ import IssueService from '@/services/IssueService';
                         .catch(error =>{
                             console.log(error);
                         })
+
+                        window.alert("You have successfully saved the issue record!");
+                }else{
+                    window.alert("You did not write anything under New Action Taken.  There are no new Updates Made from that field and succeeding fields. Updates in preceding fields have been saved!");
                 }
-                window.alert("You have successfully saved the issue record!");
+                
             }
 
         },
