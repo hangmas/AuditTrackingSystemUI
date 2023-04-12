@@ -31,18 +31,17 @@ const routes = [
         name: "dashboardAuditor",
         component: dashboardAuditor
     },
-},
-{
-path : "/dashboardAuditor",
-name : "dashboardAuditor",
-component : dashboardAuditor
-},
+    {
+        path: "/dashboardAuditor",
+        name: "dashboardAuditor",
+        component: dashboardAuditor
+    },
 
-{
-    path : "/dashboardAuditee",
-    name : "dashboardAuditee",
-    component : dashboardAuditee
-},
+    {
+        path: "/dashboardAuditee",
+        name: "dashboardAuditee",
+        component: dashboardAuditee
+    },
 
     {
         path: "/issues",
