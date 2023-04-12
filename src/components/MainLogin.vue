@@ -17,7 +17,7 @@
             </div>
         </form>
         <p>
-                    <router-link to="/signup"> Login</router-link>
+                    <router-link to="/signup">Sign Up</router-link>
                 </p>
 
         <p>{{ message }}</p>
@@ -47,11 +47,10 @@ export default{
 
             LoginService.login(this.employeeLoginRequest)
             .then(response => {
-                let employee = response.data;
-                console.log(employee);
-                localStorage.setItem('eid',employee.id);
-                this.message = employee;
-                if (employee.role === 1){
+                let item = response.data;
+                localStorage.setItem('eid',item.employee.id);
+           
+                if (item.role === 1 || item.role ===2){
                     this.$router.push({ name: "dashboardAuditor"});
                 }
                 else {

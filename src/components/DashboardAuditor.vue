@@ -51,7 +51,7 @@
   <div>
       <h2>Closed Issues</h2>
       <div>
-        <p><b><u>Total Outstanding Issue : {{ tRisk2 }}</u></b></p>
+        <p><b><u>Total Closed Issue : {{ tRisk2 }}</u></b></p>
       <p>Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{    (lRisk2/tRisk2 * 100).toFixed(2)}}%)</b></span>
       <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{    (mRisk2/tRisk2 * 100).toFixed(2) }}%)</b></span>
       <br>High Risk : <span style="color: red"><b>{{ hRisk2 }} ({{   (hRisk2/tRisk2 * 100).toFixed(2)}}%)</b></span>

@@ -9,6 +9,7 @@ import IssueEdit from "../components/IssueEdit.vue"
 import IssueViewDetail from "../components/IssueViewDetail.vue"
 import IssuePageAuditee from "../components/IssuePageAuditee.vue"
 import IssueEditAuditee from "../components/IssueEditAuditee.vue"
+import SignUp from "../components/SignUp.vue"
 
 
 const routes =[
