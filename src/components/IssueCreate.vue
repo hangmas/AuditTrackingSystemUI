@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="issue-form-container">
         <h3 id="createIssueHeader">Create New Issue</h3>
         <div class="createIssueBody">
             <div class="issuedetails">
@@ -53,6 +53,7 @@
 </template>
 <script>
 import IssueService from "@/services/IssueService";
+import "../App.css";
 // import IssueList from "./IssueList.vue"
 export default{
     name: "IssueCreate",

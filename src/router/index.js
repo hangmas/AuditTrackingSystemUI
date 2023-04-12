@@ -2,14 +2,16 @@ import { createWebHistory, createRouter } from "vue-router";
 import Login from "../components/MainLogin.vue";
 import employeeProfile from "../components/EmployeeProfile.vue";
 import IssuesPage from "../components/IssuesPage.vue";
-import dashboardAuditor from "../components/DashboardAuditor.vue"
-import dashboardAuditee from "../components/DashboardAuditee.vue"
-import IssueCreate from "../components/IssueCreate.vue"
-import IssueEdit from "../components/IssueEdit.vue"
-import IssueViewDetail from "../components/IssueViewDetail.vue"
-import IssuePageAuditee from "../components/IssuePageAuditee.vue"
-import IssueEditAuditee from "../components/IssueEditAuditee.vue"
-import IssuesReport from "../components/IssuesReports.vue"
+import dashboardAuditor from "../components/DashboardAuditor.vue";
+import dashboardAuditee from "../components/DashboardAuditee.vue";
+import IssueCreate from "../components/IssueCreate.vue";
+import IssueEdit from "../components/IssueEdit.vue";
+import IssueViewDetail from "../components/IssueViewDetail.vue";
+import IssuePageAuditee from "../components/IssuePageAuditee.vue";
+import IssueEditAuditee from "../components/IssueEditAuditee.vue";
+import IssuesReport from "../components/IssuesReports.vue";
+import NavigationPageAuditee from "../components/NavigationPageAuditee.vue";
+import NavigationPageAuditor from "../components/NavigationPageAuditor.vue";
 
 import SignUp from "../components/SignUp.vue"
 
@@ -17,19 +19,30 @@ import SignUp from "../components/SignUp.vue"
 const routes = [
     {
 
+        path: "/auditeeNavigation",
+        name: "auditeeNavigation",
+        component: NavigationPageAuditee
+    },
+    {
+
+        path: "/auditorNavigation",
+        name: "auditorNavigation",
+        component: NavigationPageAuditor
+    },
+    {
         path: "/",
-        alias: "/login", //its a nickname for the path
+        alias: "/login",
         name: "login",
         component: Login
     },
     {
-    path :"/signup",
-    name :"SignUp",
-    component : SignUp
+        path: "/signup",
+        name: "SignUp",
+        component: SignUp
 
 
-},
-{
+    },
+    {
         path: "/profile",
         name: "employeeProfile",
         component: employeeProfile
@@ -69,11 +82,11 @@ const routes = [
         name: "IssueEdit",
         component: IssueEdit
     },
-{
-    path: "/dashboard",
-    name: "dashboardAuditee",
-    component: dashboardAuditee
-},
+    {
+        path: "/dashboard",
+        name: "dashboardAuditee",
+        component: dashboardAuditee
+    },
 
     {
         path: "/viewIssues",

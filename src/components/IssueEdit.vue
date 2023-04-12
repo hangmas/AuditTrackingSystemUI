@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="issue-form-container">
         <h3 id="editIssueHeader">Edit Issue</h3>
         <div class="editIssueBody">
             <div class="editissuedetails">
@@ -86,6 +86,7 @@
 
 <script>
 import IssueService from '@/services/IssueService';
+import "../App.css";
     export default{
         name: "IssueEdit",
         data(){

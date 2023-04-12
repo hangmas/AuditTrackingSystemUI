@@ -260,7 +260,7 @@ mounted(){
 </script>
 
 <style scoped>
-    table.issuelisttable {
+    /* table.issuelisttable {
         border:10px;   
     }
     table.issuelisttable th {
@@ -275,6 +275,6 @@ mounted(){
         border-style: solid;
         border-color: gray;
         
-    }
+    } */
 
 </style>

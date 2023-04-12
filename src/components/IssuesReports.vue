@@ -26,14 +26,14 @@
             </tbody>
         </table>
     </div>
-    <div v-if="chartReport">
+    <div v-if="chartReport" class="chartReport">
         <p>
             <input type="radio" id="department" value="0" v-model="chosenFilter">
             <label for="deparment">{{ filters[0] }}</label><br>
             <input type="radio" id="riskRating" value="1" v-model="chosenFilter">
             <label for="deparment">{{ filters[1] }}</label><br>
         </p>
-        <Bar id="reportChart" v-if="chartData"  :data="chartData"/>
+        <Bar id="reportChart" v-if="chartData"  :data="chartData" :width="70" :height="20"/>
     </div>
 </template>
 

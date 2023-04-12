@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h4>Login</h4>
+    <div class="login-form">
+        <h1>Login</h1>
         <form>
 
             <div>
@@ -29,14 +29,13 @@
 
 <script>
 import LoginService from "../services/LoginService";
-
+import '../App.css'
 
 export default{
-    name : "employeeLogin",
+    name : "mainLogin",
     data(){
         return{
             employeeLoginRequest: {email:"", password:""},
-
             message: ""
         }
 
@@ -44,23 +43,22 @@ export default{
     methods:{
         login(event){
             event.preventDefault();
-
-            LoginService.login(this.employeeLoginRequest)
+            LoginService.employeeLogin(this.employeeLoginRequest)
             .then(response => {
                 let item = response.data;
                 localStorage.setItem('eid',item.employee.id);
-           
+                localStorage.setItem('role',item.role);
                 if (item.role === 1 || item.role ===2){
-                    this.$router.push({ name: "dashboardAuditor"});
+                    this.$router.push({ name: "auditorNavigation"});
                 }
                 else {
-                    this.$router.push({ name: "dashboardAuditee"});
+                    this.$router.push({ name: "auditeeNavigation"});
 
                 }
                 
             })
             .catch(error => {
-                this.employeeLoginRequest.studentId = "";
+                this.employeeLoginRequest.email = "";
                 this.employeeLoginRequest.password = "";
                 this.message = error.response.data.message;
                 console.log(error.response.data);
