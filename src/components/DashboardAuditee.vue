@@ -1,22 +1,20 @@
 <template>
-  <!-- <div>
-    <header>
-      <h1>AUDIT ISSUES MONITORING SYSTEM</h1>
-    </header>
-    <nav>
-      <ul class="nav-links">
-    <li><Router-link to="" @click="toDashboard">Dashboard</Router-link></li>
-    <li><Router-link to="" @click="toIssue">Issues</Router-link></li>
-    <li><Router-link to="" @click="toReport">Report</Router-link></li>
-    <li><Router-link to="" @click="toSettings">Settings</Router-link></li>
-    <li><Router-link to="" @click="toLogout">Logout</Router-link></li>
-  </ul>
-  </nav>
-  </div> -->
-  <div>
-      <!-- <h1>Auditee Dashboard</h1> -->
-      <h2>Outstanding Issues</h2>
-      <table class="issuelisttable">
+  <h2>Outstanding Issues</h2>
+  <div class="issues-chart">
+    
+    <div>
+      <p><b><u>Total Outstanding Issue : {{ tRisk }}</u></b></p>
+      <p class="chart-container">
+        <Doughnut :data="outstandingData"  />
+        <!-- Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{ (lRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span>
+        <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{ (mRisk2 / tRisk2 * 100).toFixed(2)
+        }}%)</b></span>
+        <br>High Risk : <span style="color: red"><b>{{ hRisk2 }} ({{ (hRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span> -->
+      </p>
+    </div>
+    <div class="issues-table">
+
+    <table class="issuelisttable">
       <tr>
         <th>Report Title</th>
         <th>Issue Title</th>
@@ -26,19 +24,34 @@
         <th>Approved Deadline</th>
       </tr>
       <tr v-for="(item, index) in filteredIssues" :key="index">
-            <td>{{ item.reportTitle }}</td>
-            <td>{{ item.issueTitle }}</td>
-            <td>{{ item.issueDate }}</td>
-            <td>{{ item.riskRating }}</td>
-            <td>{{ item.departmentResponsible }}</td>
-            <td>{{ item.approvedDeadline }}</td>
-          </tr>
-  </table>
+        <td>{{ item.reportTitle }}</td>
+        <td>{{ item.issueTitle }}</td>
+        <td>{{ item.issueDate }}</td>
+        <td>{{ item.riskRating }}</td>
+        <td>{{ item.departmentResponsible }}</td>
+        <td>{{ item.approvedDeadline }}</td>
+      </tr>
+    </table>
+    </div>
+    
   </div>
   <br><br>
-  <div>
-      <h2>Closed Issues</h2>
-      <table class="issuelisttable">
+  <h2>Closed Issues</h2>
+  <div class="issues-chart">
+    
+    <div>
+      <p><b><u>Total Closed Issue : {{ tRisk2 }}</u></b></p>
+      <p class="chart-container">
+        <Doughnut :data="closedData"  />
+        <!-- Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{ (lRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span>
+        <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{ (mRisk2 / tRisk2 * 100).toFixed(2)
+        }}%)</b></span>
+        <br>High Risk : <span style="color: red"><b>{{ hRisk2 }} ({{ (hRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span> -->
+      </p>
+    </div>
+    <div class="issues-table">
+  
+    <table class="issuelisttable">
       <tr>
         <th>Report Title</th>
         <th>Issue Title</th>
@@ -48,25 +61,32 @@
         <th>Approved Deadline</th>
       </tr>
       <tr v-for="(item, index) in filteredIssues2" :key="index">
-            <td>{{ item.reportTitle }}{{ item.auditee.employee.department }}</td>
-            <td>{{ item.issueTitle }}</td>
-            <td>{{ item.issueDate }}</td>
-            <td>{{ item.riskRating }}</td>
-            <td>{{ item.departmentResponsible }}</td>
-            <td>{{ item.approvedDeadline }}</td>
-          </tr>
-  </table>
+        <td>{{ item.reportTitle }}</td>
+        <td>{{ item.issueTitle }}</td>
+        <td>{{ item.issueDate }}</td>
+        <td>{{ item.riskRating }}</td>
+        <td>{{ item.departmentResponsible }}</td>
+        <td>{{ item.approvedDeadline }}</td>
+      </tr>
+    </table>
+    </div>
+    
   </div>
-
-  </template>
+</template>
   <script>
 
 import EmployeeDataService from '../services/EmployeeDataService'
   import IssueService from '../services/IssueService'
+  import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Doughnut } from 'vue-chartjs'
   
+ChartJS.register(ArcElement, Tooltip, Legend)
   export default{
   
   name: 'dashboardAuditee',
+  components: {
+    Doughnut
+  },
   data()
   {
       return{
@@ -196,7 +216,64 @@ import EmployeeDataService from '../services/EmployeeDataService'
   filteredIssues2() {
     return this.issuesList.filter((issue) => issue.departmentResponsible === this.eDepartment && issue.status === 'Closed')
 
-  }
+  },
+
+  tRisk() {
+      return this.filteredIssues.filter(issue => issue.riskRating === 'Low' || issue.riskRating === 'High' || issue.riskRating === 'Medium').length;
+    },
+    lRisk() {
+      return this.filteredIssues.filter(issue => issue.riskRating === 'Low').length;
+    },
+    mRisk() {
+      return this.filteredIssues.filter(issue => issue.riskRating === 'Medium').length;
+    },
+    hRisk() {
+      return this.filteredIssues.filter(issue => issue.riskRating === 'High').length;
+    },
+
+    tRisk2() {
+      return this.filteredIssues2.filter(issue => issue.riskRating === 'Low' || issue.riskRating === 'High' || issue.riskRating === 'Medium').length;
+    },
+    lRisk2() {
+      return this.filteredIssues2.filter(issue => issue.riskRating === 'Low').length;
+    },
+    mRisk2() {
+      return this.filteredIssues2.filter(issue => issue.riskRating === 'Medium').length;
+    },
+    hRisk2() {
+      return this.filteredIssues2.filter(issue => issue.riskRating === 'High').length;
+    },
+    closedData() {
+      let chartData = {
+        labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+        datasets: [
+          {
+            backgroundColor: ['#FFB034', '#FF681C', '#CE2029'],
+            data: [(this.lRisk2 / this.tRisk2 * 100).toFixed(2), (this.mRisk2 / this.tRisk2 * 100).toFixed(2), (this.hRisk2 / this.tRisk2 * 100).toFixed(2)]
+
+
+          }
+        ]
+
+      }
+      return chartData;
+    },
+
+    outstandingData() {
+      let chartData = {
+        labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+        datasets: [
+          {
+            backgroundColor: ['#FFB034', '#FF681C', '#CE2029'],
+            data: [(this.lRisk / this.tRisk * 100).toFixed(2), (this.mRisk / this.tRisk * 100).toFixed(2), (this.hRisk / this.tRisk * 100).toFixed(2)]
+
+
+          }
+        ]
+
+      }
+      return chartData;
+    }
   
   
     },

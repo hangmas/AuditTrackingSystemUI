@@ -1,30 +1,19 @@
 <template>
-  <!-- <div>
-    <header>
-      <h1>AUDIT ISSUES MONITORING SYSTEM</h1>
-    </header>
-    <nav>
-      <ul class="nav-links">
-    <li><Router-link to="" @click="toDashboard">Dashboard</Router-link></li>
-    <li><Router-link to="" @click="toIssue">Issues</Router-link></li>
-    <li><Router-link to="" @click="toReport">Report</Router-link></li>
-    <li><Router-link to="" @click="toSettings">Settings</Router-link></li>
-    <li><Router-link to="" @click="toLogout">Logout</Router-link></li>
-  </ul>
-  </nav>
-  </div> -->
-  <div>
-    <!-- <h1>Auditor Dashboard</h1> -->
-    <h2>Outstanding Issues</h2>
+  <h2>Outstanding Issues</h2>
+  <div class="issues-chart">
+    
     <div>
       <p><b><u>Total Outstanding Issue : {{ tRisk }}</u></b></p>
-      <!-- <Doughnut :data="outstandingData"  /> -->
-      <p>Low Risk : <span style="color: green"><b>{{ lRisk }} ({{   (lRisk/tRisk * 100).toFixed(2)}}%)</b></span>
-      <br>Medium Risk : <span style="color: orange"><b>{{ mRisk }} ({{    (mRisk/tRisk * 100).toFixed(2) }}%)</b></span>
-      <br>High Risk : <span style="color: red"><b>{{ hRisk }} ({{   (hRisk/tRisk * 100).toFixed(2)}}%)</b></span> 
+      <p class="chart-container">
+        <Doughnut :data="outstandingData"  />
+        <!-- Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{ (lRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span>
+        <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{ (mRisk2 / tRisk2 * 100).toFixed(2)
+        }}%)</b></span>
+        <br>High Risk : <span style="color: red"><b>{{ hRisk2 }} ({{ (hRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span> -->
       </p>
     </div>
-    <label for="department-filter">Filter by department: </label>
+    <div class="issues-table">
+      <label for="department-filter">Filter by department: </label>
     <select id="department-filter" v-model="selectedDepartment">
       <option value="">All departments</option>
       <option v-for="(department, index) in departments" :key="index" :value="department">{{ department }}</option>
@@ -47,6 +36,8 @@
         <td>{{ item.approvedDeadline }}</td>
       </tr>
     </table>
+    </div>
+    
   </div>
   <br><br>
   <h2>Closed Issues</h2>
@@ -55,7 +46,7 @@
     <div>
       <p><b><u>Total Closed Issue : {{ tRisk2 }}</u></b></p>
       <p class="chart-container">
-        <Doughnut :data="outstandingData"  />
+        <Doughnut :data="closedData"  />
         <!-- Low Risk : <span style="color: green"><b>{{ lRisk2 }} ({{ (lRisk2 / tRisk2 * 100).toFixed(2) }}%)</b></span>
         <br>Medium Risk : <span style="color: orange"><b>{{ mRisk2 }} ({{ (mRisk2 / tRisk2 * 100).toFixed(2)
         }}%)</b></span>
@@ -225,10 +216,6 @@ export default {
       }
     },
 
-    filteredEmp() {
-
-      return this.employee.filter((employee) => employee.firstName === "Shilpa")
-    },
 
     tRisk() {
       return this.filteredIssues.filter(issue => issue.riskRating === 'Low' || issue.riskRating === 'High' || issue.riskRating === 'Medium').length;
@@ -255,7 +242,7 @@ export default {
     hRisk2() {
       return this.filteredIssues2.filter(issue => issue.riskRating === 'High').length;
     },
-    outstandingData() {
+    closedData() {
       let chartData = {
         labels: ['Low Risk', 'Medium Risk', 'High Risk'],
         datasets: [
@@ -271,6 +258,23 @@ export default {
       return chartData;
     },
 
+    outstandingData() {
+      let chartData = {
+        labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+        datasets: [
+          {
+            backgroundColor: ['#FFB034', '#FF681C', '#CE2029'],
+            data: [(this.lRisk / this.tRisk * 100).toFixed(2), (this.mRisk / this.tRisk * 100).toFixed(2), (this.hRisk / this.tRisk * 100).toFixed(2)]
+
+
+          }
+        ]
+
+      }
+      return chartData;
+    },
+
+
   },
 
 
@@ -285,60 +289,5 @@ export default {
 </script>
   
 <style scoped>
-/* table.issuelisttable {
-          border:10px;
-          
-          
-      }
-      table.issuelisttable th {
-          border: 1px;
-          border-style: solid;
-          border-color: gray;
-          background-color:lightcyan;
-      }
-  
-      table.issuelisttable td {
-          border: 1px;
-          border-style: solid;
-          border-color: gray;
-          
-      }
-  
-      nav {
-  background-color: #333;
-}
-.nav-links {
-  display: flex;
-  justify-content:left;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 
-.nav-links li {
-  margin: 0;
-}
-
-.nav-links a {
-  color: #fff;
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-}
-
-.nav-links a:hover {
-  background-color: #555;
-}
-
-header {
-  background-color: #333;
-  text-align: center;
-  padding: 20px;
-}
-
-header h1 {
-  color: #fff;
-  font-size: 36px;
-  margin: 0;
-} */
 </style>
