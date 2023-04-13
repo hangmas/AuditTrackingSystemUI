@@ -54,7 +54,7 @@
         </table>
         <br>
         <br>
-        <button id="backtolistbutton" @click="handlerBackToListButton">BACK TO LIST OF ISSUES</button>
+        <!-- <button id="backtolistbutton" @click="handlerBackToListButton">BACK TO LIST OF ISSUES</button> -->
         </div>
         
     </div>
@@ -114,15 +114,15 @@ export default{
             },
 
             //handle the back button in the view detail page
-            handlerBackToListButton(event){
-                event.preventDefault();
-                if(this.employeeTag== 1){
-                    this.$router.push({name:"IssuesPage"});
-                } else if (this.employeeTag== 0){
-                    this.$router.push({name:"IssuePageAuditee"});
-                }
+            // handlerBackToListButton(event){
+            //     event.preventDefault();
+            //     if(this.employeeTag== 1){
+            //         this.$router.push({name:"IssuesPage"});
+            //     } else if (this.employeeTag== 0){
+            //         this.$router.push({name:"IssuePageAuditee"});
+            //     }
                 
-            },
+            // },
 
             // employeeTagSet(){
             //    // const employeeTagLocal = 

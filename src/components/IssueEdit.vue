@@ -77,7 +77,7 @@
                 <br>
                 <br>
                 <button id="updateissuebutton" @click="handleSaveUpdateIssueButton">SAVE CHANGES</button>
-                <button id="cancelupdateissuebutton" @click="handlerCancelUpdateIssueButton">BACK TO ISSUE LIST</button>
+                <!-- <button id="cancelupdateissuebutton" @click="handlerCancelUpdateIssueButton">BACK TO ISSUE LIST</button> -->
 
             </div>
     </div>
@@ -185,10 +185,10 @@ import "../App.css";
             },
 
             //to handle the cancel button merely to return to the issue list page
-            handlerCancelUpdateIssueButton(){
-                this.$router.push({name:"IssuesPage"});
-                this.issueDetail={};
-            },
+            // handlerCancelUpdateIssueButton(){
+            //     this.$router.push({name:"IssuesPage"});
+            //     this.issueDetail={};
+            // },
 
             //method to handle the save button
             handleSaveUpdateIssueButton(){

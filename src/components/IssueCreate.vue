@@ -45,7 +45,7 @@
         </div>
         <br>
         <button id="createnewissue" @click="createNewIssue">Create New Issue</button>
-        <button id="cancelcreate" @click="cancelButton">Cancel Create</button>
+        <!-- <button id="cancelcreate" @click="cancelButton">Cancel Create</button> -->
         <!-- <IssueList /> -->
 
     </div>
@@ -85,7 +85,7 @@ export default{
                     this.issueData={};
 
                     window.alert("You have successfully created an audit issue!");
-                    this.$router.push({name:"IssuesPage"});
+                    // this.$router.push({name:"IssuesPage"});
                 })
                 .catch(error =>{
                     window.alert("Please fill in all fields!");
@@ -107,11 +107,11 @@ export default{
             },
 
         //handler for the cancel button. it goes back to the issue list page
-        cancelButton(event){
-            event.preventDefault();
-            this.$router.push({name:"IssuesPage"});
+        // cancelButton(event){
+        //     event.preventDefault();
+        //     this.$router.push({name:"IssuesPage"});
 
-        }
+        // }
 
     },
     

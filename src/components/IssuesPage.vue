@@ -24,7 +24,7 @@
     </div>
     <br>
     <br>
-    <button @click="backToDashboardHandler">DISPLAY NAV BAR OR DASHBOARD</button>
+    <!-- <button @click="backToDashboardHandler">DISPLAY NAV BAR OR DASHBOARD</button> -->
 </template>
 
 <script>
@@ -90,10 +90,10 @@ export default {
                 //this reloads the page after the update
                 window.location.reload();
                 
-                this.$router.push({name:"IssuesPage"});
+                // this.$router.push({name:"IssuesPage"});
                 } else {
                     
-                    this.$router.push({name:"IssuesPage"});
+                    // this.$router.push({name:"IssuesPage"});
                  }
                  
                  window.location.reload();
@@ -119,10 +119,10 @@ export default {
             }
         },
 
-        backToDashboardHandler(event){
-            event.preventDefault();
-            this.$router.push({name:"auditorNavigation"});
-        }
+        // backToDashboardHandler(event){
+        //     event.preventDefault();
+        //     this.$router.push({name:"auditorNavigation"});
+        // }
      
         
     }

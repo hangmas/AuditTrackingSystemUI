@@ -71,7 +71,7 @@
                 <br>
                 <br>
                 <button id="updateissuebutton" @click="handleSaveUpdateIssueButton">SAVE CHANGES</button>
-                <button id="cancelupdateissuebutton" @click="handlerCancelUpdateIssueButton">BACK TO ISSUE LIST</button>
+                <!-- <button id="cancelupdateissuebutton" @click="handlerCancelUpdateIssueButton">BACK TO ISSUE LIST</button> -->
 
             </div>
     </div>
@@ -167,10 +167,10 @@ import "../App.css";
             console.log(this.newTimelineConverted);
             },
 
-            handlerCancelUpdateIssueButton(){
-                this.$router.push({name:"IssuePageAuditee"});
-                this.issueDetail={};
-            },
+            // handlerCancelUpdateIssueButton(){
+            //     this.$router.push({name:"IssuePageAuditee"});
+            //     this.issueDetail={};
+            // },
 
             //this saves the updates made by the user.  it involves converting dates to long format for acceptance into the repository
             handleSaveUpdateIssueButton(){
