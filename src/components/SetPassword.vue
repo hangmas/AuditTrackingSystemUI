@@ -3,7 +3,7 @@
     <div class="login-form">
         <div class="header-with-logo">
             <img class="logo" src="../assets/audit.jpg"/>
-            <h2>Signup</h2>
+            <h2>Set/Reset Password</h2>
         </div>
         <form>
             <div class="formm">
@@ -11,7 +11,7 @@
                 <input type="text" id="email" v-model="employeeSignupRequest.email"/>
                 <label for="password">Password</label>
                 <input type="password" id="password" v-model="employeeSignupRequest.password"/>
-                <button type="submit" v-on:click="signUp">Sign Up</button>
+                <button type="submit" v-on:click="setPassword">Submit</button>
                 <p>
                     <router-link to="/login"> Login</router-link>
                 </p>
@@ -26,7 +26,7 @@ import LoginService from "../services/LoginService";
 import "../App.css"
 export default{
     
-    name : "employeeLogin",
+    name : "setPassword",
     data(){
         return{
             employeeSignupRequest: {email:"", password:""},
@@ -35,7 +35,7 @@ export default{
 
     },
     methods:{
-        signUp(event){
+        setPassword(event){
             event.preventDefault();
             LoginService.user(this.employeeSignupRequest)
             .then(response => {
@@ -46,7 +46,14 @@ export default{
                     console.log("Response to",employee);
                 localStorage.setItem('user-info',employee.id);
                 this.message = employee;
-                this.$router.push({ name: "dashboardAuditor"});
+                if (employee.role === 1 || employee.role === 2) {
+                            this.$router.push({ name: "auditorNavigation" });
+                        }
+                        else {
+                            this.$router.push({ name: "auditeeNavigation" });
+
+                        }
+                //this.$router.push({ name: "dashboardAuditor"});
 
                 })
                 .catch(error=>{

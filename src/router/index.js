@@ -12,11 +12,18 @@ import IssueEditAuditee from "../components/IssueEditAuditee.vue";
 import IssuesReport from "../components/IssuesReports.vue";
 import NavigationPageAuditee from "../components/NavigationPageAuditee.vue";
 import NavigationPageAuditor from "../components/NavigationPageAuditor.vue";
+import RoleDec from "../components/RoleDec.vue";
 
-import SignUp from "../components/SignUp.vue"
+import SetPassword from "../components/SetPassword.vue"
 
 
 const routes = [
+
+    {
+        path: "/roleDec",
+        name: "roleDec",
+        component: RoleDec
+    },
     {
 
         path: "/auditeeNavigation",
@@ -36,9 +43,9 @@ const routes = [
         component: Login
     },
     {
-        path: "/signup",
-        name: "SignUp",
-        component: SignUp
+        path: "/setPassword",
+        name: "SetPassword",
+        component: SetPassword
 
 
     },

@@ -25,6 +25,7 @@ import DashboardAuditor from './DashboardAuditor.vue';
 import IssuesReports from './IssuesReports.vue';
 import IssuesPage from './IssuesPage.vue';
 import MainLogin from './MainLogin.vue';
+import RoleDec from './RoleDec.vue';
 import '../App.css'
 export default {
     name: "navigationPage",
@@ -32,7 +33,8 @@ export default {
         DashboardAuditor,
         IssuesPage,
         IssuesReports,
-        MainLogin
+        MainLogin,
+        RoleDec
 
     },
     data() {
@@ -47,18 +49,25 @@ export default {
 
     },
     mounted() {
+        this.tabs = localStorage.getItem("role") != 2 ? this.tabs: ['Dashboard', 'Issues', 'Reports','Update Role','Sign Out'];
+        this.componentTitles = localStorage.getItem("role") != 2 ? this.componentTitles: [DashboardAuditor, IssuesPage, IssuesReports, RoleDec, MainLogin];
+
         this.currentTab = 'Dashboard';
+        
     },watch:{
         currentTab(newCurrentTab){
-            switch (this.tabs.indexOf(newCurrentTab)) {
-                case 0:
+            switch (newCurrentTab) {
+                case 'Dashboard':
                     this.title = 'Auditor Dashboard';
                     break;
-                case 1:
+                case 'Issues':
                     this.title = 'Auditor Issue Page';
                     break;
-                case 2:
+                case 'Reports':
                     this.title = 'Issue Report Page';
+                    break;
+                case 'Update Role':
+                    this.title = 'Audit Employees Role';
                     break;
                 default:
                     localStorage.removeItem("eid");

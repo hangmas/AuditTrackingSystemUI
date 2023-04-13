@@ -2,7 +2,8 @@
     <div class="header">
         <h1 class="nav-title">{{ title }}</h1>
         <div class="nav-links">
-            <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]" @click="currentTab = tab">
+            <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
+                @click="currentTab = tab">
                 {{ tab }}
             </button>
 
@@ -16,7 +17,9 @@
         </ul> -->
     </div>
     <div class="row">
+
         <component :is="componentTitles[tabs.indexOf(currentTab)]" :uodate-page-title="updatePageTitle"></component>
+
     </div>
 </template>
 
@@ -39,11 +42,11 @@ export default {
             tabs: ['Dashboard', 'Issues', 'Sign Out'],
             componentTitles: [DashboardAuditee, IssuesPageAuditee, MainLogin],
             currentTab: '',
-            showHeader: true
+            showHeader: true,
         }
     },
     methods: {
-        updatePageTitle(newValue){
+        updatePageTitle(newValue) {
             console.log("-------------------");
             this.title = newValue;
         }
@@ -51,8 +54,8 @@ export default {
     mounted() {
         this.currentTab = 'Dashboard';
     },
-    watch:{
-        currentTab(newCurrentTab){
+    watch: {
+        currentTab(newCurrentTab) {
             switch (this.tabs.indexOf(newCurrentTab)) {
                 case 0:
                     this.title = 'Auditee Dashboard';
