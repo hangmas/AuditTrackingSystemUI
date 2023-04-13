@@ -47,7 +47,9 @@ export default {
                     .then(response => {
                         let item = response.data;
                         localStorage.setItem('eid', item.employee.id);
+                    
                         localStorage.setItem('role', item.role);
+                        console.log("Response tadsfasdfo",item.employee.id);
                         if (item.role === 1 || item.role === 2) {
                             this.$router.push({ name: "auditorNavigation" });
                         }
