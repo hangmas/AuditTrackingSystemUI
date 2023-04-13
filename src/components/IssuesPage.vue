@@ -96,7 +96,7 @@ export default {
                     // this.$router.push({name:"IssuesPage"});
                  }
                  
-                 window.location.reload();
+                //  window.location.reload();
             }
         },
 
