@@ -20,7 +20,7 @@
     </div>
     <br>
     <br>
-    <button @click="backToDashboardHandler">Back to Dashboard</button>
+    <button @click="backToDashboardHandler">DISPLAY NAV BAR OR DASHBOARD</button>
     
 </template>
 
@@ -77,7 +77,7 @@ export default {
 
         backToDashboardHandler(event){
             event.preventDefault();
-            this.$router.push({name:"dashboardAuditee"});
+            this.$router.push({name:"auditeeNavigation"});
         }
     }
 }
