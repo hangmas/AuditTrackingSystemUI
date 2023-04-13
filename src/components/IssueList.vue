@@ -209,7 +209,7 @@ methods: {
                     this.issuesListToDisplay= this.issuesListAuditee;
                 }
 
-            }else if(this.employeeTag == 1){
+            }else if(this.employeeTag == 1||this.employeeTag == 2){
                 this.issuesListToDisplay= this.issueListUnpacked;
                 if(this.selectedFiltering=="outstanding"){
                     this.issuesListToDisplay = this.issueListUnpacked.filter(issue => issue.status ==="Outstanding");
