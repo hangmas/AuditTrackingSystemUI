@@ -44,7 +44,9 @@ export default{
                 .then(response2 => {
                     let employee = response2.data;
                     console.log("Response to",employee);
-                localStorage.setItem('user-info',employee.id);
+                localStorage.setItem('eid', employee.employee.id);
+                        localStorage.setItem('role', employee.role);
+                        console.log("Response to",employee.employee.id);
                 this.message = employee;
                 if (employee.role === 1 || employee.role === 2) {
                             this.$router.push({ name: "auditorNavigation" });
