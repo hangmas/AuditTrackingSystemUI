@@ -231,7 +231,7 @@ methods: {
     //set the value of index when the row is checked.
     updateCheckbox(index) {
         this.checkedIndex = index;
-        this.selectedIssue = this.issuesList[index];     
+        this.selectedIssue = this.issuesListToDisplay[index];     
         
     },
 
