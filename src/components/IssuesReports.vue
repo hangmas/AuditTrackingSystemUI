@@ -21,7 +21,7 @@
                     <td>{{ row.issueTitle }}</td>
                     <td>{{ row.riskRating }}</td>
                     <td>{{ row.departmentResponsible }}</td>
-                    <td>{{ row.approvedDeadline }}</td>
+                    <td>{{  new Date(row.approvedDeadline  * 1000).toLocaleDateString()}}</td>
                 </tr>
             </tbody>
         </table>
